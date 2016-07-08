@@ -79,13 +79,12 @@ public class LibraryServiceImpl implements LibraryService{
 		DAOFactory factory = DAOFactory.getInstance();
 		UserDao userDao = factory.getFileUserDao();
 		
-		List<Book> listBook;
+		List<Book> listBook = null;
 		try {
 			listBook = userDao.getCatalog();
 		} catch (DAOException e) {
 			throw new ServiceException("service message", e);
 		}
-		
 		return listBook;
 	}
 

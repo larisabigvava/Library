@@ -1,9 +1,11 @@
 package by.tr.library.view;
 
+import by.tr.library.bean.Book;
 import by.tr.library.bean.Request;
 import by.tr.library.bean.Response;
 import by.tr.library.controller.Controller;
 
+import java.util.List;
 import java.util.Scanner;
 import java.util.StringJoiner;
 
@@ -37,6 +39,14 @@ public class View {
                     break;
                 case "4":
                     findBooksByAuthor();
+                    System.out.println("Enter new command");
+                    break;
+                case "5":
+                    addBook();
+                    System.out.println("Enter new command");
+                    break;
+                case "6":
+                    getCatalog();
                     System.out.println("Enter new command");
                     break;
                 default:
@@ -88,6 +98,8 @@ public class View {
         System.out.println("2. print menu");
         System.out.println("3. find book by title");
         System.out.println("4. find book by author");
+        System.out.println("5. add book");
+        System.out.println("6. get catalog");
     }
 
     private void authorization(){
@@ -134,11 +146,15 @@ public class View {
             System.out.println(response.getErrorMessage());
         } else {
             System.out.println(response.getMessage());
-            System.out.println(response.getBook().getAuthor());
-            System.out.println(response.getBook().getTitle());
-            System.out.println(response.getBook().getPrice());
+            printBook(response.getBook());
         }
 
+    }
+
+    private void printBook(Book book){
+        System.out.println(book.getAuthor());
+        System.out.println(book.getTitle());
+        System.out.println(book.getPrice());
     }
 
     private void findBooksByAuthor(){
@@ -156,9 +172,7 @@ public class View {
             System.out.println(response.getErrorMessage());
         } else {
             System.out.println(response.getMessage());
-            System.out.println(response.getBook().getAuthor());
-            System.out.println(response.getBook().getTitle());
-            System.out.println(response.getBook().getPrice());
+            printBook(response.getBook());
         }
     }
 
@@ -192,9 +206,7 @@ public class View {
             System.out.println(response.getErrorMessage());
         } else {
             System.out.println(response.getMessage());
-            System.out.println(response.getBook().getAuthor());
-            System.out.println(response.getBook().getTitle());
-            System.out.println(response.getBook().getPrice());
+            printBook(response.getBook());
         }
     }
 
@@ -204,7 +216,20 @@ public class View {
     }
 
     private void getCatalog(){
-        //TODO
+        Request request = new Request();
+        request.setCommandName("GET_CATALOG_COMMAND");
+        Response response = controller.doAction(request);
+        if (!(response.getErrorMessage() == null)){
+            System.out.println(response.getErrorMessage());
+        } else {
+            List<Book> list = response.getListBook();
+            System.out.println(response.getMessage());
+            if (!(list == null)) {
+                for (Book book: list) {
+                    printBook(book);
+                }
+            }
+        }
     }
 
     private void deleteUserById(){
