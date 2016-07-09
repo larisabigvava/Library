@@ -144,7 +144,7 @@ public class View {
         request.setCommandName("GET_BOOK_BY_TITLE_COMMAND");
         request.setTitle(title);
         Response response = controller.doAction(request);
-        if (!(response.getErrorMessage() == null)){
+        if (response.getErrorMessage() != null){
             System.out.println(response.getErrorMessage());
         } else {
             System.out.println(response.getMessage());
@@ -170,7 +170,7 @@ public class View {
         request.setCommandName("GET_BOOK_BY_AUTHOR_COMMAND");
         request.setAuthor(author);
         Response response = controller.doAction(request);
-        if (!(response.getErrorMessage() == null)){
+        if (response.getErrorMessage() != null){
             System.out.println(response.getErrorMessage());
         } else {
             System.out.println(response.getMessage());
@@ -204,7 +204,7 @@ public class View {
         request.setAuthor(author);
         request.setPrice(Integer.parseInt(price));
         Response response = controller.doAction(request);
-        if (!(response.getErrorMessage() == null)){
+        if (response.getErrorMessage() != null){
             System.out.println(response.getErrorMessage());
         } else {
             System.out.println(response.getMessage());
@@ -212,16 +212,11 @@ public class View {
         }
     }
 
-    private void deleteBookByTitle(){
-        String title;
-        //TODO
-    }
-
     private void getCatalog(){
         Request request = new Request();
         request.setCommandName("GET_CATALOG_COMMAND");
         Response response = controller.doAction(request);
-        if (!(response.getErrorMessage() == null)){
+        if (response.getErrorMessage() != null){
             System.out.println(response.getErrorMessage());
         } else {
             List<Book> list = response.getListBook();
@@ -232,6 +227,11 @@ public class View {
                 }
             }
         }
+    }
+
+    private void deleteBookByTitle(){
+        String title;
+        //TODO
     }
 
     private void deleteUserById(){
