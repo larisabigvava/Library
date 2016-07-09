@@ -17,12 +17,14 @@ public class View {
     private Controller controller = new Controller();
 
     public void start(){
-        String command;
-        System.out.println("Do you have an account (y/n)?");
-        command = scanner.nextLine();
+        String command = "";
+        while (!(command.equals("y") || command.equals("n"))) {
+            System.out.println("Do you have an account (y/n)?");
+            command = scanner.nextLine();
+        }
         if (command.equals("y")) {
             authorization();
-        } else if (command.equals("n")){
+        } else if (command.equals("n")) {
             registration();
         }
         printMenu();
@@ -82,7 +84,7 @@ public class View {
         request.setLogin(login);
         request.setPassword(password1);
         Response response = controller.doAction(request);
-        if (!(response.getErrorMessage() == null)){
+        if (response.getErrorMessage() != null){
             System.out.println(response.getErrorMessage());
             System.out.println("Try again");
             registration();
@@ -121,7 +123,7 @@ public class View {
         request.setLogin(login);
         request.setPassword(password);
         Response response = controller.doAction(request);
-        if (!(response.getErrorMessage() == null)){
+        if (response.getErrorMessage() != null){
             System.out.println(response.getErrorMessage());
             System.out.println("Try again");
             authorization();

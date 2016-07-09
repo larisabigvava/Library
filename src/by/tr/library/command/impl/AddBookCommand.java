@@ -1,5 +1,6 @@
 package by.tr.library.command.impl;
 
+import by.tr.library.bean.Book;
 import by.tr.library.bean.Request;
 import by.tr.library.bean.Response;
 import by.tr.library.command.Command;
@@ -12,13 +13,15 @@ public class AddBookCommand implements Command {
 
 	@Override
 	public Response execute(Request request) throws CommandException {
-		String author = request.getAuthor(), title = request.getTitle();
-		int price = request.getPrice();
 		ServiceFactory factory = ServiceFactory.getInstance();
 		LibraryService service = factory.getLibraryService();
 		boolean result;
+		Book book = new Book();
+		book.setAuthor(request.getAuthor());
+		book.setTitle(request.getTitle());
+		book.setPrice(request.getPrice());
 		try {
-			result = service.addBook(title, author, price);
+			result = service.addBook(book);
 		} catch (ServiceException e) {
 			throw new CommandException("add book command exception", e);
 		}
