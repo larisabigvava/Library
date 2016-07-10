@@ -6,7 +6,34 @@ public class Request {
 	private String password;
 	private String title;
 	private String author;
+	private String level;
+	private String language;
 	private int price;
+	private int id;
+
+	public String getLevel() {
+		return level;
+	}
+
+	public void setLevel(String level) {
+		this.level = level;
+	}
+
+	public String getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public int getPrice() {
 		return price;
