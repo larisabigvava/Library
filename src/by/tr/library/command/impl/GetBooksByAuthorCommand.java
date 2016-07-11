@@ -9,6 +9,8 @@ import by.tr.library.service.LibraryService;
 import by.tr.library.service.ServiceFactory;
 import by.tr.library.service.exception.ServiceException;
 
+import java.util.List;
+
 /**
  * Created by Larisa_Bigvava on 7/8/2016.
  */
@@ -20,17 +22,17 @@ public class GetBooksByAuthorCommand implements Command {
         ServiceFactory factory = ServiceFactory.getInstance();
         LibraryService service = factory.getLibraryService();
         boolean result = false;
-        Book book;
+        List <Book> books;
         try {
-            book = service.findByAuthor(author);
+            books = service.findByAuthor(author);
         } catch (ServiceException e) {
             throw new CommandException("get book by title command exception", e);
         }
         Response response = new Response();
-        if (book != null) {
+        if (books != null) {
             response.setErrorMessage(null);
             response.setMessage("Book was founded.");
-            response.setBook(book);
+            response.setListBook(books);
         } else {
             response.setErrorMessage("There is no book with this title.");
             response.setMessage(null);

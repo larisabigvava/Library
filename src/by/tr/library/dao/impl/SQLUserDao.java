@@ -22,7 +22,7 @@ public class SQLUserDao implements UserDao{
 	}
 
 	@Override
-	public Book getBooksByAuthor(String title) throws DAOException {
+	public List<Book> getBooksByAuthor(String title) throws DAOException {
 		return null;
 	}
 

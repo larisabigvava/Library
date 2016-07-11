@@ -8,5 +8,5 @@ import by.tr.library.dao.exception.DAOException;
 public interface UserDao {
 	List<Book> getCatalog() throws DAOException;
 	Book getBookByTitle(String title) throws DAOException;
-	Book getBooksByAuthor(String title) throws DAOException;
+	List<Book> getBooksByAuthor(String title) throws DAOException;
 }

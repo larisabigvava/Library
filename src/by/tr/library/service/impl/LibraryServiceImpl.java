@@ -14,19 +14,19 @@ import by.tr.library.service.exception.ServiceException;
 public class LibraryServiceImpl implements LibraryService{
 
 	@Override
-	public Book findByAuthor(String author) throws ServiceException {
-		Book book = null;
+	public List<Book> findByAuthor(String author) throws ServiceException {
+		List <Book> books = null;
 
 		DAOFactory factory = DAOFactory.getInstance();
 		UserDao fileUserDao = factory.getFileUserDao();
 
 		try {
-			book = fileUserDao.getBooksByAuthor(author);
+			books = fileUserDao.getBooksByAuthor(author);
 		} catch (DAOException e){
 			throw new ServiceException("service message", e);
 		}
 
-		return book;
+		return books;
 	}
 
 	@Override
@@ -64,8 +64,18 @@ public class LibraryServiceImpl implements LibraryService{
 
 	@Override
 	public boolean deleteBookByTitle(String title) throws ServiceException {
-		//TODO
-		return false;
+		boolean result = false;
+
+		DAOFactory factory = DAOFactory.getInstance();
+		AdminDao adminDao = factory.getFileAdminDao();
+
+		try {
+			result = adminDao.deleteBookByTitle(title);
+		} catch (DAOException e) {
+			throw new ServiceException("service message", e);
+		}
+
+		return result;
 	}
 
 	@Override

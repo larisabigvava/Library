@@ -19,4 +19,9 @@ public class FileCommonDao implements CommonDao {
         //TODO
         return false;
     }
+
+    @Override
+    public boolean changePassword(String password) throws DAOException {
+        return false;
+    }
 }

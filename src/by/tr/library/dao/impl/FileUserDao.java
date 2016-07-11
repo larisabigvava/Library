@@ -23,7 +23,7 @@ public class FileUserDao implements UserDao {
     }
 
     @Override
-    public Book getBooksByAuthor(String title) throws DAOException {
+    public List <Book> getBooksByAuthor(String title) throws DAOException {
         //TODO
         return null;
     }

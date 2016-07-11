@@ -18,9 +18,6 @@ public class FileAdminDao implements AdminDao {
 
     private final static String fileName = System.getProperty("java.class.path") + "/books.txt";
 
-    private FileAdminDao() {
-    }
-
     public static FileAdminDao getInstance() {
         return instance;
     }
