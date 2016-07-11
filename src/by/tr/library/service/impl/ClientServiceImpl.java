@@ -19,7 +19,7 @@ public class ClientServiceImpl implements ClientService{
 		try {
 			result = fileCommonDao.authorization(login, password);
 		} catch (DAOException e) {
-			throw new ServiceException("service message", e);
+			throw new ServiceException("authorization service exception", e);
 		}
 		
 		return result;
@@ -35,7 +35,7 @@ public class ClientServiceImpl implements ClientService{
 		try {
 			result = fileCommonDao.registration(login, password);
 		} catch (DAOException e) {
-			throw new ServiceException("service message", e);
+			throw new ServiceException("registration service exception", e);
 		}
 
 		return result;
@@ -51,7 +51,7 @@ public class ClientServiceImpl implements ClientService{
 		try {
 			result = adminDao.deleteUserById(id);
 		} catch (DAOException e) {
-			throw new ServiceException("service message", e);
+			throw new ServiceException("delete user service exception", e);
 		}
 
 		return result;
@@ -67,7 +67,7 @@ public class ClientServiceImpl implements ClientService{
 		try {
 			result = adminDao.deleteUserByLogin(login);
 		} catch (DAOException e) {
-			throw new ServiceException("service message", e);
+			throw new ServiceException("delete user service exception", e);
 		}
 
 		return result;
@@ -83,7 +83,7 @@ public class ClientServiceImpl implements ClientService{
 		try {
 			result = adminDao.blockUserById(id);
 		} catch (DAOException e) {
-			throw new ServiceException("service message", e);
+			throw new ServiceException("block user service exception", e);
 		}
 
 		return result;
@@ -99,7 +99,7 @@ public class ClientServiceImpl implements ClientService{
 		try {
 			result = commonDao.changePassword(password);
 		} catch (DAOException e) {
-			throw new ServiceException("service message", e);
+			throw new ServiceException("chenge password service exception", e);
 		}
 
 		return result;

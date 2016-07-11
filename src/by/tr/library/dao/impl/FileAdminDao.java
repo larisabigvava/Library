@@ -16,7 +16,8 @@ public class FileAdminDao implements AdminDao {
 
     private final static FileAdminDao instance = new FileAdminDao();
 
-    private final static String fileName = System.getProperty("java.class.path") + "/books.txt";
+    private final static String fileNameBooks = System.getProperty("java.class.path") + "/books.txt";
+    private final static String fileNameUsers = System.getProperty("java.class.path") + "/users.txt";
 
     public static FileAdminDao getInstance() {
         return instance;
@@ -29,13 +30,13 @@ public class FileAdminDao implements AdminDao {
     }
 
     @Override
-    public boolean addNewBook(Book book) throws DAOException {
-        try (FileOutputStream fos = new FileOutputStream(fileName, true)) {
+    public boolean addNewBook(String book) throws DAOException {
+        try (FileOutputStream fos = new FileOutputStream(fileNameBooks, true)) {
             PrintWriter writer = new PrintWriter(fos);
-            writer.println(prepare(book));
+            writer.println(book);
             writer.flush();
         } catch (IOException ex) {
-            throw new DAOException(ex.getMessage(), ex);
+            throw new DAOException("add new book dao exception", ex);
         }
         return true;
     }
@@ -58,19 +59,5 @@ public class FileAdminDao implements AdminDao {
         return false;
     }
 
-    private String prepare(Book book) {
-        StringBuilder record = new StringBuilder(book.getTitle());
-            record.append("::")
-                    .append(book.getAuthor())
-                    .append("::")
-                    .append(book.getPrice());
-        if (book.getClass() == ProgrammerBook.class) {
-            ProgrammerBook programmerBook = (ProgrammerBook) book;
-            record.append("::")
-                    .append(programmerBook.getLevel())
-                    .append("::")
-                    .append(programmerBook.getLanguage());
-        }
-        return record.toString();
-    }
+
 }
