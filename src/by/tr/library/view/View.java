@@ -1,9 +1,6 @@
 package by.tr.library.view;
 
-import by.tr.library.bean.Book;
-import by.tr.library.bean.ProgrammerBook;
-import by.tr.library.bean.Request;
-import by.tr.library.bean.Response;
+import by.tr.library.bean.*;
 import by.tr.library.controller.Controller;
 
 import java.util.List;
@@ -16,6 +13,7 @@ import java.util.StringJoiner;
 public class View {
     private Scanner scanner = new Scanner(System.in);
     private Controller controller = new Controller();
+    private User user;
 
     public void start(){
         String command = "";
@@ -70,6 +68,8 @@ public class View {
             System.out.println("Please enter your password:");
             password1 = scanner.nextLine();
         }
+        System.out.println("Repeat password");
+        password2 = scanner.nextLine();
         while (!password1.equals(password2)){
             System.out.println("Passwords don't match. Please  try again");
             password2 = scanner.nextLine();
@@ -85,6 +85,7 @@ public class View {
             registration();
         } else {
             System.out.println(response.getMessage());
+            user = response.getUser();
         }
 
     }
@@ -120,6 +121,7 @@ public class View {
             authorization();
         } else {
             System.out.println(response.getMessage());
+            user = response.getUser();
         }
     }
 
@@ -212,7 +214,6 @@ public class View {
             System.out.println(response.getErrorMessage());
         } else {
             System.out.println(response.getMessage());
-            printBook(response.getBook());
         }
     }
 
@@ -223,11 +224,14 @@ public class View {
         if (response.getErrorMessage() != null){
             System.out.println(response.getErrorMessage());
         } else {
-            List<Book> list = response.getListBook();
+            Catalog catalog = response.getCatalog();
             System.out.println(response.getMessage());
-            if (!(list == null)) {
-                for (Book book: list) {
+            if (catalog != null) {
+                for (Book book: catalog.getBooks()) {
                     printBook(book);
+                }
+                for (ProgrammerBook programmerBook: catalog.getProgrammerBooks()) {
+                    printBook(programmerBook);
                 }
             }
         }

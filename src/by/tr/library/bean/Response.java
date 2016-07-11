@@ -3,23 +3,31 @@ package by.tr.library.bean;
 import java.util.List;
 
 public class Response {
-	private List<Book> listBook;
+	private Catalog catalog;
 	private Book book;
 	private String errorMessage;
 	private String message;
-	
-	
+	private User user;
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	public String getMessage() {
 		return message;
 	}
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	public List<Book> getListBook() {
-		return listBook;
+	public Catalog getCatalog() {
+		return catalog;
 	}
-	public void setListBook(List<Book> listBook) {
-		this.listBook = listBook;
+	public void setCatalog(Catalog catalog) {
+		this.catalog = catalog;
 	}
 	public Book getBook() {
 		return book;

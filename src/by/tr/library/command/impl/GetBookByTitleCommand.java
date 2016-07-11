@@ -20,7 +20,7 @@ public class GetBookByTitleCommand implements Command {
         ServiceFactory factory = ServiceFactory.getInstance();
         LibraryService service = factory.getLibraryService();
         boolean result = false;
-        Book book;
+        Book book = null;
         try {
             book = service.findByTitle(title);
         } catch (ServiceException e) {

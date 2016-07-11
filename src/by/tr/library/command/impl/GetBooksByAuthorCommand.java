@@ -1,6 +1,7 @@
 package by.tr.library.command.impl;
 
 import by.tr.library.bean.Book;
+import by.tr.library.bean.Catalog;
 import by.tr.library.bean.Request;
 import by.tr.library.bean.Response;
 import by.tr.library.command.Command;
@@ -22,17 +23,17 @@ public class GetBooksByAuthorCommand implements Command {
         ServiceFactory factory = ServiceFactory.getInstance();
         LibraryService service = factory.getLibraryService();
         boolean result = false;
-        List <Book> books;
+        Catalog catalog = null;
         try {
-            books = service.findByAuthor(author);
+            catalog = service.findByAuthor(author);
         } catch (ServiceException e) {
             throw new CommandException("get book by title command exception", e);
         }
         Response response = new Response();
-        if (books != null) {
+        if (catalog != null) {
             response.setErrorMessage(null);
             response.setMessage("Book was founded.");
-            response.setListBook(books);
+            response.setCatalog(catalog);
         } else {
             response.setErrorMessage("There is no book with this title.");
             response.setMessage(null);

@@ -3,6 +3,7 @@ package by.tr.library.service.impl;
 import java.util.List;
 
 import by.tr.library.bean.Book;
+import by.tr.library.bean.Catalog;
 import by.tr.library.bean.ProgrammerBook;
 import by.tr.library.dao.AdminDao;
 import by.tr.library.dao.CommonDao;
@@ -15,19 +16,19 @@ import by.tr.library.service.exception.ServiceException;
 public class LibraryServiceImpl implements LibraryService{
 
 	@Override
-	public List<Book> findByAuthor(String author) throws ServiceException {
-		List <Book> books = null;
+	public Catalog findByAuthor(String author) throws ServiceException {
+		Catalog catalog = null;
 
 		DAOFactory factory = DAOFactory.getInstance();
 		UserDao fileUserDao = factory.getFileUserDao();
 
 		try {
-			books = fileUserDao.getBooksByAuthor(author);
+			catalog = fileUserDao.getBooksByAuthor(author);
 		} catch (DAOException e){
 			throw new ServiceException("find book service exception", e);
 		}
 
-		return books;
+		return catalog;
 	}
 
 	@Override
@@ -55,7 +56,7 @@ public class LibraryServiceImpl implements LibraryService{
 		
 		// call method check
 		try {
-			result = adminDao.addNewBook(prepare(book));
+			result = adminDao.addNewBook(book);
 		} catch (DAOException e) {
 			throw new ServiceException("add book service exception", e);
 		}
@@ -80,35 +81,20 @@ public class LibraryServiceImpl implements LibraryService{
 	}
 
 	@Override
-	public List<Book> getCatalog() throws ServiceException {
+	public Catalog getCatalog() throws ServiceException {
 		
 		DAOFactory factory = DAOFactory.getInstance();
-		UserDao userDao = factory.getFileUserDao();
+		CommonDao commonDao = factory.getFileCommonDao();
 		
-		List<Book> listBook = null;
+		Catalog catalog = null;
 		try {
-			listBook = userDao.getCatalog();
+			catalog = commonDao.getCatalog();
 		} catch (DAOException e) {
 			throw new ServiceException("get catalog service exception", e);
 		}
-		return listBook;
+		return catalog;
 	}
 
-	private String prepare(Book book) {
-		StringBuilder record = new StringBuilder(book.getTitle());
-		record.append("::")
-				.append(book.getAuthor())
-				.append("::")
-				.append(book.getPrice());
-		if (book.getClass() == ProgrammerBook.class) {
-			ProgrammerBook programmerBook = (ProgrammerBook) book;
-			record.append("::")
-					.append(programmerBook.getLevel())
-					.append("::")
-					.append(programmerBook.getLanguage());
-		}
-		return record.toString();
-	}
 
 }
 

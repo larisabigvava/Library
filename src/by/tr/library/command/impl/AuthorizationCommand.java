@@ -29,7 +29,7 @@ public class AuthorizationCommand implements Command{
 			response.setErrorMessage(null);
 			response.setMessage("Authorization completed successfully");
 		} else {
-			response.setErrorMessage("there is no user with such credentials");
+			response.setErrorMessage("There is no unblocked user with such credentials");
 			response.setMessage(null);
 		}
 		return response;

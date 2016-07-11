@@ -3,6 +3,7 @@ package by.tr.library.command.impl;
 import java.util.List;
 
 import by.tr.library.bean.Book;
+import by.tr.library.bean.Catalog;
 import by.tr.library.bean.Request;
 import by.tr.library.bean.Response;
 import by.tr.library.command.Command;
@@ -19,16 +20,15 @@ public class GetCalatogCommand implements Command{
 		ServiceFactory factory = ServiceFactory.getInstance();
 		LibraryService service = factory.getLibraryService();
 
-		List<Book> books = null;
+		Catalog catalog = null;
 		try {
-			books = service.getCatalog();
+			catalog = service.getCatalog();
 		} catch (ServiceException e) {
 			throw new CommandException("get catalog command exception", e);
 		}
-		
 		Response response = new Response();
 		response.setErrorMessage(null);
-		response.setListBook(books);
+		response.setCatalog(catalog);
 		
 		return response;
 	}
