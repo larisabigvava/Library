@@ -8,6 +8,6 @@ public interface ClientService {
        boolean deleteUserById (int id) throws ServiceException;
        boolean deleteUserByLogin (String login) throws ServiceException;
        boolean blockUserById (int id) throws ServiceException;
-       boolean changePassword (String password) throws ServiceException;
+       boolean changePassword (String login, String password) throws ServiceException;
 
 }

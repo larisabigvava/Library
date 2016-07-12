@@ -43,7 +43,7 @@ public class View {
                     System.out.println("Enter new command");
                     break;
                 case "5":
-                    addBook();
+                    changePassword();
                     System.out.println("Enter new command");
                     break;
                 case "6":
@@ -96,7 +96,7 @@ public class View {
         System.out.println("2. print menu");
         System.out.println("3. find book by title");
         System.out.println("4. find book by author");
-        System.out.println("5. add book");
+        System.out.println("5. change password");
         System.out.println("6. get catalog");
     }
 
@@ -306,8 +306,22 @@ public class View {
     }
 
     private void changePassword(){
-        String password;
-        //TODO
+        String password = "";
+        String login = user.getLogin();
+        while (password.isEmpty()){
+            System.out.println("Enter new password");
+            password = scanner.nextLine();
+        }
+        Request request = new Request();
+        request.setCommandName("CHANGE_PASSWORD_COMMAND");
+        request.setLogin(login);
+        request.setPassword(password);
+        Response response = controller.doAction(request);
+        if (response.getErrorMessage() != null){
+            System.out.println(response.getErrorMessage());
+        } else {
+            System.out.println(response.getMessage());
+        }
     }
 
 }

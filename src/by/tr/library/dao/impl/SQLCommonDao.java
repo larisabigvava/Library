@@ -18,7 +18,7 @@ public class SQLCommonDao implements CommonDao {
 	}
 
 	@Override
-	public boolean changePassword(String password) throws DAOException {
+	public boolean changePassword(String login, String password) throws DAOException {
 		return false;
 	}
 

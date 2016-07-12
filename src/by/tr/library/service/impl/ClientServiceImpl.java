@@ -90,16 +90,16 @@ public class ClientServiceImpl implements ClientService{
 	}
 
 	@Override
-	public boolean changePassword(String password) throws ServiceException {
+	public boolean changePassword(String login, String password) throws ServiceException {
 		boolean result;
 
 		DAOFactory factory = DAOFactory.getInstance();
 		CommonDao commonDao = factory.getFileCommonDao();
 
 		try {
-			result = commonDao.changePassword(password);
+			result = commonDao.changePassword(login, password);
 		} catch (DAOException e) {
-			throw new ServiceException("chenge password service exception", e);
+			throw new ServiceException("change password service exception", e);
 		}
 
 		return result;

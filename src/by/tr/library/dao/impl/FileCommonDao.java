@@ -34,10 +34,16 @@ public class FileCommonDao implements CommonDao {
 
     @Override
     public boolean authorization(String login, String password) throws DAOException {
-        users = readFile();
+        if (users == null){
+            users = readFile();
+        }
+        String roleAdmin = "ADMIN";
+        String roleUser = "USER";
+        String blocked = "false";
         for (String user: users){
             if (user.startsWith(login)){
-                if (user.contentEquals(login+"::"+password+"::ADMIN::not") || user.contentEquals(login+"::"+password+"::USER::not")){
+                if (user.contentEquals(login+"::"+password+"::"+roleAdmin+"::"+blocked)
+                        || user.contentEquals(login+"::"+password+"::"+roleUser+"::"+blocked)){
                     return true;
                 }
             }
@@ -47,9 +53,11 @@ public class FileCommonDao implements CommonDao {
 
     @Override
     public boolean registration(String login, String password) throws DAOException {
-        if (users == null) users = readFile();
+        if (users == null){
+            users = readFile();
+        }
         String role = (users.size() == 0) ? "ADMIN" : "USER";
-        String blocked = "not";
+        boolean blocked = false;
         users = null;
         try (FileWriter writer = new FileWriter(USERS_FILE, true)) {
             writer.append(login)
@@ -58,7 +66,7 @@ public class FileCommonDao implements CommonDao {
                     .append("::")
                     .append(role)
                     .append("::")
-                    .append(blocked)
+                    .append(String.valueOf(blocked))
                     .append("\n");
         } catch (IOException ex) {
             throw new DAOException(ex.getMessage(), ex);
@@ -67,7 +75,21 @@ public class FileCommonDao implements CommonDao {
     }
 
     @Override
-    public boolean changePassword(String password) throws DAOException {
+    public boolean changePassword(String login,String password) throws DAOException {
+        String role;
+        for (String user: users){
+            if (user.startsWith(login)){
+                users.remove(user);
+                if (user.contains("::ADMIN::")){
+                    role = "ADMIN";
+                    user = login+"::"+password+"::"+role+"::"+false;
+                } else if (user.contains("::USER::")){
+                    role = "USER";
+                    user = login+"::"+password+"::"+role+"::"+false;
+                }
+                users.add(user);
+            }
+        }
         return false;
     }
 

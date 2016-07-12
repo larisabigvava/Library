@@ -18,7 +18,7 @@ public class ChangePasswordCommand implements Command {
         ClientService service = factory.getClientService();
         boolean result;
         try {
-            result = service.changePassword(request.getPassword());
+            result = service.changePassword(request.getLogin(), request.getPassword());
         } catch (ServiceException e) {
             throw new CommandException("change password command exception", e);
         }
