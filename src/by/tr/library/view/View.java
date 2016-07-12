@@ -26,35 +26,107 @@ public class View {
         } else if (command.equals("n")) {
             registration();
         }
-        printMenu();
+        printUserMenu();
         command = scanner.nextLine();
-        while (!command.equals("1")){
-            switch (command){
-                case "2":
-                    printMenu();
-                    System.out.println("Enter new command");
-                    break;
-                case "3":
-                    getBookByTitle();
-                    System.out.println("Enter new command");
-                    break;
-                case "4":
-                    findBooksByAuthor();
-                    System.out.println("Enter new command");
-                    break;
-                case "5":
-                    changePassword();
-                    System.out.println("Enter new command");
-                    break;
-                case "6":
-                    getCatalog();
-                    System.out.println("Enter new command");
-                    break;
-                default:
-                    System.out.println("Wrong command.");
-                    System.out.println("Enter new command:");
+        if (user.getRole().equals("ADMIN")) {
+            printAdminMenu();
+            while (!command.equals("1")){
+                switch (command){
+                    case "2":
+                        printUserMenu();
+                        printAdminMenu();
+                        System.out.println("Enter new command");
+                        break;
+                    case "3":
+                        getBookByTitle();
+                        System.out.println("Enter new command");
+                        break;
+                    case "4":
+                        findBooksByAuthor();
+                        System.out.println("Enter new command");
+                        break;
+                    case "5":
+                        changePassword();
+                        System.out.println("Enter new command");
+                        break;
+                    case "6":
+                        getCatalog();
+                        System.out.println("Enter new command");
+                        break;
+                    case "7":
+                        blockUserById();
+                        System.out.println("Enter new command");
+                        break;
+                    case "8":
+                        deleteUserById();
+                        System.out.println("Enter new command");
+                        break;
+                    case "9":
+                        deleteUserByLogin();
+                        System.out.println("Enter new command");
+                        break;
+                    case "10":
+                        addBook();
+                        System.out.println("Enter new command");
+                        break;
+                    case "11":
+                        deleteBookByTitle();
+                        System.out.println("Enter new command");
+                        break;
+                    default:
+                        System.out.println("Wrong command.");
+                        System.out.println("Enter new command:");
+                }
+                command = scanner.nextLine();
             }
-            command = scanner.nextLine();
+        } else if (user.getRole().equals("USER")) {
+            while (!command.equals("1")) {
+                switch (command) {
+                    case "2":
+                        printUserMenu();
+                        if (user.getRole().equals("ADMIN")) {
+                            printAdminMenu();
+                        }
+                        System.out.println("Enter new command");
+                        break;
+                    case "3":
+                        getBookByTitle();
+                        System.out.println("Enter new command");
+                        break;
+                    case "4":
+                        findBooksByAuthor();
+                        System.out.println("Enter new command");
+                        break;
+                    case "5":
+                        changePassword();
+                        System.out.println("Enter new command");
+                        break;
+                    case "6":
+                        getCatalog();
+                        System.out.println("Enter new command");
+                        break;
+                    default:
+                        System.out.println("Wrong command.");
+                        System.out.println("Enter new command:");
+                }
+                command = scanner.nextLine();
+            }
+        }
+    }
+
+    private void blockUserById() {
+        String id = "";
+        while (id.isEmpty() || !id.matches("[0-9]+")){
+            System.out.println("Please enter your login:");
+            id = scanner.nextLine();
+        }
+        Request request = new Request();
+        request.setId(Integer.parseInt(id));
+        Response response = controller.doAction(request);
+        if (response.getErrorMessage() != null){
+            System.out.println(response.getErrorMessage());
+        } else {
+            System.out.println(response.getMessage());
         }
     }
 
@@ -90,14 +162,22 @@ public class View {
 
     }
 
-    private void printMenu(){
+    private void printUserMenu(){
         System.out.println("Choose a command:");
         System.out.println("1. close program");
         System.out.println("2. print menu");
         System.out.println("3. find book by title");
-        System.out.println("4. find book by author");
+        System.out.println("4. find books by author");
         System.out.println("5. change password");
         System.out.println("6. get catalog");
+    }
+
+    private void printAdminMenu(){
+        System.out.println("7. block user by id");
+        System.out.println("8. delete user by id");
+        System.out.println("9. delete user by login");
+        System.out.println("10. add book");
+        System.out.println("11. delete book by title");
     }
 
     private void authorization(){
