@@ -2,6 +2,7 @@ package by.tr.library.command.impl;
 
 import by.tr.library.bean.Request;
 import by.tr.library.bean.Response;
+import by.tr.library.bean.User;
 import by.tr.library.command.Command;
 import by.tr.library.command.exception.CommandException;
 import by.tr.library.service.ClientService;
@@ -17,19 +18,21 @@ public class RegisterUserCommand implements Command {
 
 		ServiceFactory factory = ServiceFactory.getInstance();
 		ClientService service = factory.getClientService();
-		boolean result;
+		User user = null;
 		try {
-			result = service.registration(login, password);
+			user = service.registration(login, password);
 		} catch (ServiceException e) {
 			throw new CommandException("registration command exception", e);
 		}
 		Response response = new Response();
-		if (result) {
+		if (user != null) {
 			response.setErrorMessage(null);
 			response.setMessage("Registration completed successfully");
+			response.setUser(user);
 		} else {
 			response.setErrorMessage("There is user with such credentials.Please choose new login");
 			response.setMessage(null);
+			response.setUser(null);
 		}
 		return response;
 	}

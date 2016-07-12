@@ -2,10 +2,7 @@ package by.tr.library.view;
 
 import by.tr.library.bean.*;
 import by.tr.library.controller.Controller;
-
-import java.util.List;
 import java.util.Scanner;
-import java.util.StringJoiner;
 
 /**
  * Created by Larisa_Bigvava on 7/8/2016.
@@ -54,23 +51,23 @@ public class View {
                         System.out.println("Enter new command");
                         break;
                     case "7":
-                        blockUserById();
+                        blockUserByLogin();
                         System.out.println("Enter new command");
                         break;
                     case "8":
-                        deleteUserById();
-                        System.out.println("Enter new command");
-                        break;
-                    case "9":
                         deleteUserByLogin();
                         System.out.println("Enter new command");
                         break;
-                    case "10":
+                    case "9":
                         addBook();
                         System.out.println("Enter new command");
                         break;
-                    case "11":
+                    case "10":
                         deleteBookByTitle();
+                        System.out.println("Enter new command");
+                        break;
+                    case "11":
+                        unblockUserByLogin();
                         System.out.println("Enter new command");
                         break;
                     default:
@@ -114,14 +111,32 @@ public class View {
         }
     }
 
-    private void blockUserById() {
-        String id = "";
-        while (id.isEmpty() || !id.matches("[0-9]+")){
-            System.out.println("Please enter your login:");
-            id = scanner.nextLine();
+    private void unblockUserByLogin() {
+        String login = "";
+        while (login.isEmpty()){
+            System.out.println("Please enter user's login:");
+            login = scanner.nextLine();
         }
         Request request = new Request();
-        request.setId(Integer.parseInt(id));
+        request.setCommandName("UNBLOCK_USER_BY_LOGIN_COMMAND");
+        request.setLogin(login);
+        Response response = controller.doAction(request);
+        if (response.getErrorMessage() != null){
+            System.out.println(response.getErrorMessage());
+        } else {
+            System.out.println(response.getMessage());
+        }
+    }
+
+    private void blockUserByLogin() {
+        String login = "";
+        while (login.isEmpty()){
+            System.out.println("Please enter user's login:");
+            login = scanner.nextLine();
+        }
+        Request request = new Request();
+        request.setCommandName("UNBLOCK_USER_BY_LOGIN_COMMAND");
+        request.setLogin(login);
         Response response = controller.doAction(request);
         if (response.getErrorMessage() != null){
             System.out.println(response.getErrorMessage());
@@ -173,11 +188,11 @@ public class View {
     }
 
     private void printAdminMenu(){
-        System.out.println("7. block user by id");
-        System.out.println("8. delete user by id");
-        System.out.println("9. delete user by login");
-        System.out.println("10. add book");
-        System.out.println("11. delete book by title");
+        System.out.println("7. block user by login");
+        System.out.println("8. delete user by login");
+        System.out.println("9. add book");
+        System.out.println("10. delete book by title");
+        System.out.println("11. unblock user by login");
     }
 
     private void authorization(){
@@ -351,23 +366,6 @@ public class View {
         }
     }
 
-    private void deleteUserById(){
-        String id = "";
-        while (!id.matches("[0-9]+")){
-            System.out.println("Enter users's id");
-            id = scanner.nextLine();
-        }
-        Request deleteRequest = new Request();
-        deleteRequest.setCommandName("DELETE_USER_BY_ID_COMMAND");
-        deleteRequest.setId(Integer.parseInt(id));
-        Response deleteResponse = controller.doAction(deleteRequest);
-        if (deleteResponse.getErrorMessage() != null){
-            System.out.println(deleteResponse.getErrorMessage());
-        } else {
-            System.out.println(deleteResponse.getMessage());
-            }
-        }
-
     private void deleteUserByLogin(){
         String login = "";
         while (login.isEmpty()){
@@ -403,5 +401,4 @@ public class View {
             System.out.println(response.getMessage());
         }
     }
-
 }

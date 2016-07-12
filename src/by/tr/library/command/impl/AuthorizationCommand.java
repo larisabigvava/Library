@@ -19,19 +19,21 @@ public class AuthorizationCommand implements Command{
 
 		ServiceFactory factory = ServiceFactory.getInstance();
 		ClientService service = factory.getClientService();
-		boolean result;
+		User user = null;
 		try {
-			result = service.authorization(login, password);
+			user = service.authorization(login, password);
 		} catch (ServiceException e) {
 			throw new CommandException("Authorization command exception", e);
 		}
 		Response response = new Response();
-		if (result) {
+		if (user != null) {
 			response.setErrorMessage(null);
 			response.setMessage("Authorization completed successfully");
+			response.setUser(user);
 		} else {
 			response.setErrorMessage("There is no unblocked user with such credentials");
 			response.setMessage(null);
+			response.setUser(null);
 		}
 		return response;
 	}

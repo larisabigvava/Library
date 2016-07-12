@@ -3,18 +3,19 @@ package by.tr.library.dao.impl;
 import java.io.IOException;
 
 import by.tr.library.bean.Catalog;
+import by.tr.library.bean.User;
 import by.tr.library.dao.CommonDao;
 import by.tr.library.dao.exception.DAOException;
 
 public class SQLCommonDao implements CommonDao {
 	@Override
-	public boolean authorization(String login, String password) throws DAOException {
-		return false;
+	public User authorization(String login, String password) throws DAOException {
+		return null;
 	}
 
 	@Override
-	public boolean registration(String login, String password) throws DAOException {
-		return false;
+	public User registration(String login, String password) throws DAOException {
+		return null;
 	}
 
 	@Override
@@ -26,6 +27,7 @@ public class SQLCommonDao implements CommonDao {
 	public Catalog getCatalog() throws DAOException {
 		return null;
 	}
+
 
 //	@Override
 //	public boolean authorization(String login, String password) throws DAOException {

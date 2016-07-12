@@ -1,5 +1,6 @@
 package by.tr.library.service.impl;
 
+import by.tr.library.bean.User;
 import by.tr.library.dao.AdminDao;
 import by.tr.library.dao.CommonDao;
 import by.tr.library.dao.DAOFactory;
@@ -10,52 +11,37 @@ import by.tr.library.service.exception.ServiceException;
 public class ClientServiceImpl implements ClientService{
 
 	@Override
-	public boolean authorization (String login, String password) throws ServiceException  {
-		boolean result;
+	public User authorization (String login, String password) throws ServiceException  {
+		User user = null;
 
 		DAOFactory factory = DAOFactory.getInstance();
 		CommonDao fileCommonDao = factory.getFileCommonDao();
 
 		try {
-			result = fileCommonDao.authorization(login, password);
+			user = fileCommonDao.authorization(login, password);
 		} catch (DAOException e) {
-			throw new ServiceException("authorization service exception", e);
+			throw new ServiceException("Authorization service exception", e);
 		}
 		
-		return result;
+		return user;
 	}
 
 	@Override
-	public boolean registration(String login, String password) throws ServiceException {
-		boolean result;
+	public User registration(String login, String password) throws ServiceException {
+		User user = null;
 
 		DAOFactory factory = DAOFactory.getInstance();
 		CommonDao fileCommonDao = factory.getFileCommonDao();
 
 		try {
-			result = fileCommonDao.registration(login, password);
+			user = fileCommonDao.registration(login, password);
 		} catch (DAOException e) {
-			throw new ServiceException("registration service exception", e);
+			throw new ServiceException("Registration service exception", e);
 		}
 
-		return result;
+		return user;
 	}
 
-	@Override
-	public boolean deleteUserById(int id) throws ServiceException {
-		boolean result;
-
-		DAOFactory factory = DAOFactory.getInstance();
-		AdminDao adminDao = factory.getFileAdminDao();
-
-		try {
-			result = adminDao.deleteUserById(id);
-		} catch (DAOException e) {
-			throw new ServiceException("delete user service exception", e);
-		}
-
-		return result;
-	}
 
 	@Override
 	public boolean deleteUserByLogin(String login) throws ServiceException {
@@ -67,23 +53,23 @@ public class ClientServiceImpl implements ClientService{
 		try {
 			result = adminDao.deleteUserByLogin(login);
 		} catch (DAOException e) {
-			throw new ServiceException("delete user service exception", e);
+			throw new ServiceException("Delete user service exception", e);
 		}
 
 		return result;
 	}
 
 	@Override
-	public boolean blockUserById(int id) throws ServiceException {
+	public boolean blockUserByLogin(String login) throws ServiceException {
 		boolean result;
 
 		DAOFactory factory = DAOFactory.getInstance();
 		AdminDao adminDao = factory.getFileAdminDao();
 
 		try {
-			result = adminDao.blockUserById(id);
+			result = adminDao.blockUserByLogin(login);
 		} catch (DAOException e) {
-			throw new ServiceException("block user service exception", e);
+			throw new ServiceException("Block user service exception", e);
 		}
 
 		return result;
@@ -99,7 +85,23 @@ public class ClientServiceImpl implements ClientService{
 		try {
 			result = commonDao.changePassword(login, password);
 		} catch (DAOException e) {
-			throw new ServiceException("change password service exception", e);
+			throw new ServiceException("Change password service exception", e);
+		}
+
+		return result;
+	}
+
+	@Override
+	public boolean unblockUserByLogin(String login) throws ServiceException {
+		boolean result;
+
+		DAOFactory factory = DAOFactory.getInstance();
+		AdminDao adminDao = factory.getFileAdminDao();
+
+		try {
+			result = adminDao.unblockUserByLogin(login);
+		} catch (DAOException e) {
+			throw new ServiceException("Unblock user service exception", e);
 		}
 
 		return result;

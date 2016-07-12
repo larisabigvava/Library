@@ -6,14 +6,14 @@ import by.tr.library.dao.exception.DAOException;
 
 public class SQLAdminDao implements AdminDao {
 
+
 	@Override
-	public boolean blockUserById(int idUser) throws DAOException {
+	public boolean blockUserByLogin(String login) throws DAOException {
 		return false;
 	}
 
 	@Override
-	public boolean addNewBook(Book book) {
-		// TODO Auto-generated method stub
+	public boolean addNewBook(Book book) throws DAOException {
 		return false;
 	}
 
@@ -23,13 +23,7 @@ public class SQLAdminDao implements AdminDao {
 	}
 
 	@Override
-	public boolean deleteUserById(int id) throws DAOException {
-		return false;
-	}
-
-	@Override
 	public boolean deleteUserByLogin(String login) throws DAOException {
 		return false;
 	}
-
 }

@@ -33,29 +33,40 @@ public class FileCommonDao implements CommonDao {
     private FileCommonDao(){}
 
     @Override
-    public boolean authorization(String login, String password) throws DAOException {
+    public User authorization(String login, String password) throws DAOException {
         if (users == null){
-            users = readFile();
+            users = readUsersFile();
         }
+        User user = null;
         String roleAdmin = "ADMIN";
         String roleUser = "USER";
         String blocked = "false";
-        for (String user: users){
-            if (user.startsWith(login)){
-                if (user.contentEquals(login+"::"+password+"::"+roleAdmin+"::"+blocked)
-                        || user.contentEquals(login+"::"+password+"::"+roleUser+"::"+blocked)){
-                    return true;
+        for (String userStr: users){
+            if (userStr.startsWith(login)){
+                if (userStr.contentEquals(login+"::"+password+"::"+roleAdmin+"::"+blocked)){
+                    user = new User();
+                    user.setLogin(login);
+                    user.setPassword(password);
+                    user.setRole(roleAdmin);
+                    user.setBlocked(false);
+                } else if (userStr.contentEquals(login+"::"+password+"::"+roleUser+"::"+blocked)){
+                    user = new User();
+                    user.setLogin(login);
+                    user.setPassword(password);
+                    user.setRole(roleUser);
+                    user.setBlocked(false);
                 }
             }
         }
-        return false;
+        return user;
     }
 
     @Override
-    public boolean registration(String login, String password) throws DAOException {
+    public User registration(String login, String password) throws DAOException {
         if (users == null){
-            users = readFile();
+            users = readUsersFile();
         }
+        User user = null;
         String role = (users.size() == 0) ? "ADMIN" : "USER";
         boolean blocked = false;
         users = null;
@@ -68,15 +79,21 @@ public class FileCommonDao implements CommonDao {
                     .append("::")
                     .append(String.valueOf(blocked))
                     .append("\n");
+            user = new User();
+            user.setLogin(login);
+            user.setPassword(password);
+            user.setRole(role);
+            user.setBlocked(false);
         } catch (IOException ex) {
             throw new DAOException("registration dao exception", ex);
         }
-        return true;
+        return user;
     }
 
     @Override
     public boolean changePassword(String login,String password) throws DAOException {
         String role;
+        boolean result = false;
         for (String user: users) {
             if (user.startsWith(login)) {
                 users.remove(user);
@@ -96,10 +113,10 @@ public class FileCommonDao implements CommonDao {
                 } catch (IOException ex) {
                     throw new DAOException("change password dao exception", ex);
                 }
-                return true;
+                result = true;
             }
         }
-            return false;
+            return result;
     }
 
     @Override
@@ -129,16 +146,16 @@ public class FileCommonDao implements CommonDao {
         return catalog;
     }
 
-        private List<String> readFile() throws DAOException {
-            List<String> strings = new ArrayList<>();
-            try (FileInputStream fis = new FileInputStream(new File(USERS_FILE))) {
-                Scanner scanner = new Scanner(fis);
-                while (scanner.hasNextLine()) {
-                    strings.add(scanner.nextLine());
-                }
-            } catch (IOException ex) {
-                throw new DAOException("File with users data not found!", ex);
+    public List<String> readUsersFile() throws DAOException {
+        List<String> strings = new ArrayList<>();
+        try (FileInputStream fis = new FileInputStream(new File(USERS_FILE))) {
+            Scanner scanner = new Scanner(fis);
+            while (scanner.hasNextLine()) {
+                strings.add(scanner.nextLine());
             }
-            return strings;
+        } catch (IOException ex) {
+            throw new DAOException("File with users data not found!", ex);
         }
+        return strings;
+    }
 }

@@ -15,10 +15,10 @@ public class CommandHelper {
 		commands.put(CommandName.ADD_BOOK_COMMAND, new AddBookCommand());
 		commands.put(CommandName.REGISTER_COMMAND, new RegisterUserCommand());
 		commands.put(CommandName.GET_CATALOG_COMMAND, new GetCalatogCommand());
-		commands.put(CommandName.BLOCK_USER_BY_ID_COMMAND, new BlockUserByIdCommand());
+		commands.put(CommandName.BLOCK_USER_BY_LOGIN_COMMAND, new BlockUserByLoginCommand());
 		commands.put(CommandName.CHANGE_PASSWORD_COMMAND, new ChangePasswordCommand());
 		commands.put(CommandName.DELETE_BOOK_BY_TITLE_COMMAND, new DeleteBookByTitleCommand());
-		commands.put(CommandName.DELETE_USER_BY_ID_COMMAND, new DeleteUserByIdCommand());
+		commands.put(CommandName.UNBLOCK_USER_BY_LOGIN_COMMAND, new UnblockUserByLoginCommand());
 		commands.put(CommandName.DELETE_USER_BY_LOGIN_COMMAND, new DeleteUserByLoginCommand());
 		commands.put(CommandName.GET_BOOK_BY_TITLE_COMMAND, new GetBookByTitleCommand());
 		commands.put(CommandName.GET_BOOKS_BY_AUTHOR_COMMAND, new GetBooksByAuthorCommand());

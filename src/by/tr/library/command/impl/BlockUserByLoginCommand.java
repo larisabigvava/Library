@@ -11,21 +11,21 @@ import by.tr.library.service.exception.ServiceException;
 /**
  * Created by Larisa_Bigvava on 7/8/2016.
  */
-public class DeleteUserByIdCommand implements Command {
+public class BlockUserByLoginCommand implements Command {
     @Override
     public Response execute(Request request) throws CommandException {
         ServiceFactory factory = ServiceFactory.getInstance();
         ClientService service = factory.getClientService();
         boolean result;
         try {
-            result = service.deleteUserById(request.getId());
+            result = service.blockUserByLogin(request.getLogin());
         } catch (ServiceException e) {
-            throw new CommandException("deleting user command exception", e);
+            throw new CommandException("block user command exception", e);
         }
         Response response = new Response();
         if (result) {
             response.setErrorMessage(null);
-            response.setMessage("Deleting completed successfully");
+            response.setMessage("Blocking completed successfully");
         } else {
             response.setErrorMessage("there is no user with such id");
             response.setMessage(null);
