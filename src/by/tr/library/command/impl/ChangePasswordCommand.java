@@ -20,14 +20,14 @@ public class ChangePasswordCommand implements Command {
         try {
             result = service.changePassword(request.getLogin(), request.getPassword());
         } catch (ServiceException e) {
-            throw new CommandException("change password command exception", e);
+            throw new CommandException("Change password command exception", e);
         }
         Response response = new Response();
         if (result) {
             response.setErrorMessage(null);
             response.setMessage("Changing password completed successfully");
         } else {
-            response.setErrorMessage("there is no user with such credentials");
+            response.setErrorMessage("There is no user with such credentials");
             response.setMessage(null);
         }
         return response;

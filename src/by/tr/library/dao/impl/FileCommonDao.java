@@ -69,7 +69,7 @@ public class FileCommonDao implements CommonDao {
                     .append(String.valueOf(blocked))
                     .append("\n");
         } catch (IOException ex) {
-            throw new DAOException(ex.getMessage(), ex);
+            throw new DAOException("registration dao exception", ex);
         }
         return true;
     }
@@ -77,20 +77,29 @@ public class FileCommonDao implements CommonDao {
     @Override
     public boolean changePassword(String login,String password) throws DAOException {
         String role;
-        for (String user: users){
-            if (user.startsWith(login)){
+        for (String user: users) {
+            if (user.startsWith(login)) {
                 users.remove(user);
-                if (user.contains("::ADMIN::")){
+                if (user.contains("::ADMIN::")) {
                     role = "ADMIN";
-                    user = login+"::"+password+"::"+role+"::"+false;
-                } else if (user.contains("::USER::")){
+                    user = login + "::" + password + "::" + role + "::" + false;
+                } else if (user.contains("::USER::")) {
                     role = "USER";
-                    user = login+"::"+password+"::"+role+"::"+false;
+                    user = login + "::" + password + "::" + role + "::" + false;
                 }
                 users.add(user);
+                try (FileWriter writer = new FileWriter(USERS_FILE, false)) {
+                    for (String userStr: users) {
+                        writer.append(userStr)
+                                .append("\n");
+                    }
+                } catch (IOException ex) {
+                    throw new DAOException("change password dao exception", ex);
+                }
+                return true;
             }
         }
-        return false;
+            return false;
     }
 
     @Override
@@ -120,16 +129,16 @@ public class FileCommonDao implements CommonDao {
         return catalog;
     }
 
-    private List<String> readFile() throws DAOException {
-        List<String> strings = new ArrayList<>();
-        try (FileInputStream fis = new FileInputStream(new File(USERS_FILE))) {
-            Scanner scanner = new Scanner(fis);
-            while (scanner.hasNextLine()) {
-                strings.add(scanner.nextLine());
+        private List<String> readFile() throws DAOException {
+            List<String> strings = new ArrayList<>();
+            try (FileInputStream fis = new FileInputStream(new File(USERS_FILE))) {
+                Scanner scanner = new Scanner(fis);
+                while (scanner.hasNextLine()) {
+                    strings.add(scanner.nextLine());
+                }
+            } catch (IOException ex) {
+                throw new DAOException("File with users data not found!", ex);
             }
-        } catch (IOException ex) {
-            throw new DAOException("File with users data not found!", ex);
+            return strings;
         }
-        return strings;
-    }
 }
