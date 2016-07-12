@@ -31,13 +31,13 @@ public class AddBookCommand implements Command {
 			try {
 				result = service.addBook(programmerBook);
 			} catch (ServiceException e) {
-				throw new CommandException("add book command exception", e);
+				throw new CommandException("Add book command exception", e);
 			}
 		} else {
 			try {
 				result = service.addBook(book);
 			} catch (ServiceException e) {
-				throw new CommandException("add book command exception", e);
+				throw new CommandException("Add book command exception", e);
 			}
 		}
 		Response response = new Response();

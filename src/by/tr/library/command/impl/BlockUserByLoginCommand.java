@@ -20,14 +20,14 @@ public class BlockUserByLoginCommand implements Command {
         try {
             result = service.blockUserByLogin(request.getLogin());
         } catch (ServiceException e) {
-            throw new CommandException("block user command exception", e);
+            throw new CommandException("Block user command exception", e);
         }
         Response response = new Response();
         if (result) {
             response.setErrorMessage(null);
             response.setMessage("Blocking completed successfully");
         } else {
-            response.setErrorMessage("there is no user with such id");
+            response.setErrorMessage("There is no user with such id");
             response.setMessage(null);
         }
         return response;

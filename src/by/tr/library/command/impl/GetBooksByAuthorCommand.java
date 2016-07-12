@@ -27,7 +27,7 @@ public class GetBooksByAuthorCommand implements Command {
         try {
             catalog = service.findByAuthor(author);
         } catch (ServiceException e) {
-            throw new CommandException("get book by title command exception", e);
+            throw new CommandException("Get book by title command exception", e);
         }
         Response response = new Response();
         if (catalog.getBooks().isEmpty() && catalog.getProgrammerBooks().isEmpty()) {

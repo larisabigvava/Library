@@ -22,7 +22,7 @@ public class RegisterUserCommand implements Command {
 		try {
 			user = service.registration(login, password);
 		} catch (ServiceException e) {
-			throw new CommandException("registration command exception", e);
+			throw new CommandException("Registration command exception", e);
 		}
 		Response response = new Response();
 		if (user != null) {

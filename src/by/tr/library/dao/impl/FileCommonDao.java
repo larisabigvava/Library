@@ -85,7 +85,7 @@ public class FileCommonDao implements CommonDao {
             user.setRole(role);
             user.setBlocked(false);
         } catch (IOException ex) {
-            throw new DAOException("registration dao exception", ex);
+            throw new DAOException("Registration dao exception", ex);
         }
         return user;
     }
@@ -111,7 +111,7 @@ public class FileCommonDao implements CommonDao {
                                 .append("\n");
                     }
                 } catch (IOException ex) {
-                    throw new DAOException("change password dao exception", ex);
+                    throw new DAOException("Change password dao exception", ex);
                 }
                 result = true;
             }
@@ -145,7 +145,7 @@ public class FileCommonDao implements CommonDao {
 
             }
         } catch (IOException ex) {
-            throw new DAOException("get catalog dao exception", ex);
+            throw new DAOException("Get catalog dao exception", ex);
         }
         return catalog;
     }

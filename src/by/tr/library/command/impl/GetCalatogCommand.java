@@ -24,7 +24,7 @@ public class GetCalatogCommand implements Command{
 		try {
 			catalog = service.getCatalog();
 		} catch (ServiceException e) {
-			throw new CommandException("get catalog command exception", e);
+			throw new CommandException("Get catalog command exception", e);
 		}
 		Response response = new Response();
 		if (catalog.getBooks().isEmpty() && catalog.getProgrammerBooks().isEmpty()) {

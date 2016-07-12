@@ -25,7 +25,7 @@ public class LibraryServiceImpl implements LibraryService{
 		try {
 			catalog = fileUserDao.getBooksByAuthor(author);
 		} catch (DAOException e){
-			throw new ServiceException("find book service exception", e);
+			throw new ServiceException("Find book by author service exception", e);
 		}
 
 		return catalog;
@@ -41,7 +41,7 @@ public class LibraryServiceImpl implements LibraryService{
 		try {
 			catalog = fileUserDao.getBooksByTitle(title);
 		} catch (DAOException e){
-			throw new ServiceException("find book service exception", e);
+			throw new ServiceException("Find book by title service exception", e);
 		}
 
 		return catalog;
@@ -57,7 +57,7 @@ public class LibraryServiceImpl implements LibraryService{
 		try {
 			result = adminDao.addNewBook(book);
 		} catch (DAOException e) {
-			throw new ServiceException("add book service exception", e);
+			throw new ServiceException("Add book service exception", e);
 		}
 		
 		return result;
@@ -73,7 +73,7 @@ public class LibraryServiceImpl implements LibraryService{
 		try {
 			result = adminDao.deleteBookByTitle(title);
 		} catch (DAOException e) {
-			throw new ServiceException("delete book service exception", e);
+			throw new ServiceException("Delete book service exception", e);
 		}
 
 		return result;
@@ -89,7 +89,7 @@ public class LibraryServiceImpl implements LibraryService{
 		try {
 			catalog = commonDao.getCatalog();
 		} catch (DAOException e) {
-			throw new ServiceException("get catalog service exception", e);
+			throw new ServiceException("Get catalog service exception", e);
 		}
 		return catalog;
 	}

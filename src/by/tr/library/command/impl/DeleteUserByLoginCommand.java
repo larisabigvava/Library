@@ -20,14 +20,14 @@ public class DeleteUserByLoginCommand implements Command {
         try {
             result = service.deleteUserByLogin(request.getLogin());
         } catch (ServiceException e) {
-            throw new CommandException("deleting user command exception", e);
+            throw new CommandException("Deleting user command exception", e);
         }
         Response response = new Response();
         if (result) {
             response.setErrorMessage(null);
             response.setMessage("Deleting user completed successfully");
         } else {
-            response.setErrorMessage("there is no user with such login");
+            response.setErrorMessage("There is no user with such login");
             response.setMessage(null);
         }
         return response;

@@ -20,7 +20,7 @@ public class DeleteBookByTitleCommand implements Command{
         try {
             result = service.deleteBookByTitle(request.getTitle());
         } catch (ServiceException e) {
-            throw new CommandException("deleting book command exception", e);
+            throw new CommandException("Deleting book command exception", e);
         }
         Response response = new Response();
         if (result) {

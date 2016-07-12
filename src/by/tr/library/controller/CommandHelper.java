@@ -8,7 +8,6 @@ import by.tr.library.command.impl.*;
 
 public class CommandHelper {
 	private Map<CommandName, Command> commands = new HashMap<>();
-//	private Map<String, Command> commands = new HashMap<>();
 
 	public CommandHelper(){
 		commands.put(CommandName.AUTHORIZATION_COMMAND, new AuthorizationCommand());
@@ -24,7 +23,7 @@ public class CommandHelper {
 		commands.put(CommandName.GET_BOOKS_BY_AUTHOR_COMMAND, new GetBooksByAuthorCommand());
 	}
 	
-	public Command getCommand(String commandName){//"REGISTER_USER"
+	public Command getCommand(String commandName){
 		CommandName command = CommandName.valueOf(commandName);
 		Command executeCommand = commands.get(command);
 		return executeCommand;
