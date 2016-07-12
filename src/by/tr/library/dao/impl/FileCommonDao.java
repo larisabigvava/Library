@@ -22,8 +22,8 @@ public class FileCommonDao implements CommonDao {
 
     private final static FileCommonDao instance = new FileCommonDao();
 
-    private final static String BOOKS_FILE = "C:\\ \\_poit+epam\\test automation\\лаба\\Library\\src\\resources\\books.txt";
-    private final static String USERS_FILE = "C:\\ \\_poit+epam\\test automation\\лаба\\Library\\src\\resources\\users.txt";
+    private final static String BOOKS_FILE = "C:\\Users\\Larisa_Bigvava@epam.com\\Desktop\\Library\\books.txt";
+    private final static String USERS_FILE = "C:\\Users\\Larisa_Bigvava@epam.com\\Desktop\\Library\\users.txt";
     private List<String> users = null;
 
     public static FileCommonDao getInstance() {
@@ -127,18 +127,22 @@ public class FileCommonDao implements CommonDao {
             while (scanner.hasNextLine()) {
                 String record = scanner.nextLine();
                 String[] recordFields = record.split("::");
-                Book book = new Book();
-                book.setTitle(recordFields[0]);
-                book.setAuthor(recordFields[1]);
-                book.setPrice(Integer.parseInt(recordFields[2]));
-                if (recordFields.length == 5){
-                    ProgrammerBook programmerBook = (ProgrammerBook)book;
+                if (recordFields.length == 5) {
+                    ProgrammerBook programmerBook = new ProgrammerBook();
+                    programmerBook.setTitle(recordFields[0]);
+                    programmerBook.setAuthor(recordFields[1]);
+                    programmerBook.setPrice(Integer.parseInt(recordFields[2]));
                     programmerBook.setLevel(recordFields[3]);
                     programmerBook.setLanguage(recordFields[4]);
                     catalog.addProgrammerBook(programmerBook);
                 } else {
+                    Book book = new Book();
+                    book.setTitle(recordFields[0]);
+                    book.setAuthor(recordFields[1]);
+                    book.setPrice(Integer.parseInt(recordFields[2]));
                     catalog.addBook(book);
                 }
+
             }
         } catch (IOException ex) {
             throw new DAOException("get catalog dao exception", ex);

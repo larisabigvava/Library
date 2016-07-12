@@ -6,9 +6,13 @@ import by.tr.library.dao.exception.DAOException;
 
 public class SQLAdminDao implements AdminDao {
 
-
 	@Override
 	public boolean blockUserByLogin(String login) throws DAOException {
+		return false;
+	}
+
+	@Override
+	public boolean unblockUserByLogin(String login) throws DAOException {
 		return false;
 	}
 

@@ -27,9 +27,15 @@ public class GetCalatogCommand implements Command{
 			throw new CommandException("get catalog command exception", e);
 		}
 		Response response = new Response();
-		response.setErrorMessage(null);
-		response.setCatalog(catalog);
-		
+		if (catalog.getBooks().isEmpty() && catalog.getProgrammerBooks().isEmpty()) {
+			response.setErrorMessage("Library is empty.");
+			response.setMessage(null);
+			response.setCatalog(null);
+		} else {
+			response.setErrorMessage(null);
+			response.setMessage("Library contains books");
+			response.setCatalog(catalog);
+		}
 		return response;
 	}
 

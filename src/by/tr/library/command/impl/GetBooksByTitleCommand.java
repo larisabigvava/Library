@@ -28,14 +28,14 @@ public class GetBooksByTitleCommand implements Command {
             throw new CommandException("get book by title command exception", e);
         }
         Response response = new Response();
-        if (!(catalog.getBooks().isEmpty() && catalog.getProgrammerBooks().isEmpty())) {
+        if (catalog.getBooks().isEmpty() && catalog.getProgrammerBooks().isEmpty()) {
+            response.setErrorMessage("There is no such books.");
+            response.setMessage(null);
+            response.setCatalog(null);
+        } else {
             response.setErrorMessage(null);
             response.setMessage("Books were founded.");
             response.setCatalog(catalog);
-        } else {
-            response.setErrorMessage("There is no book with this title.");
-            response.setMessage(null);
-            response.setCatalog(null);
         }
         return response;
     }

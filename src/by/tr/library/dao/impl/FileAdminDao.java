@@ -24,9 +24,8 @@ import java.util.List;
 public class FileAdminDao implements AdminDao {
 
     private final static FileAdminDao instance = new FileAdminDao();
-
-    private final static String BOOKS_FILE = "C:\\ \\_poit+epam\\test automation\\лаба\\Library\\src\\resources\\books.txt";
-    private final static String USERS_FILE = "C:\\ \\_poit+epam\\test automation\\лаба\\Library\\src\\resources\\users.txt";
+    private final static String BOOKS_FILE = "C:\\Users\\Larisa_Bigvava@epam.com\\Desktop\\Library\\books.txt";
+    private final static String USERS_FILE = "C:\\Users\\Larisa_Bigvava@epam.com\\Desktop\\Library\\users.txt";
     private List<String> users = null;
 
     public static FileAdminDao getInstance() {

@@ -24,9 +24,9 @@ public class View {
             registration();
         }
         printUserMenu();
-        command = scanner.nextLine();
         if (user.getRole().equals("ADMIN")) {
             printAdminMenu();
+            command = scanner.nextLine();
             while (!command.equals("1")){
                 switch (command){
                     case "2":
@@ -77,6 +77,7 @@ public class View {
                 command = scanner.nextLine();
             }
         } else if (user.getRole().equals("USER")) {
+            command = scanner.nextLine();
             while (!command.equals("1")) {
                 switch (command) {
                     case "2":
@@ -245,13 +246,13 @@ public class View {
     }
 
     private void printBook(Book book){
-        System.out.println(book.getAuthor());
-        System.out.println(book.getTitle());
-        System.out.println(book.getPrice());
+        System.out.println("Author: "+book.getAuthor());
+        System.out.println("Title: "+book.getTitle());
+        System.out.println("Price: "+book.getPrice());
         if (book.getClass() == ProgrammerBook.class){
             ProgrammerBook programmerBook = (ProgrammerBook) book;
-            System.out.println(programmerBook.getLanguage());
-            System.out.println(programmerBook.getLevel());
+            System.out.println("Language: "+programmerBook.getLanguage());
+            System.out.println("Level: "+programmerBook.getLevel());
         }
     }
 
@@ -262,7 +263,7 @@ public class View {
             author = scanner.nextLine();
         }
         Request request = new Request();
-        request.setCommandName("GET_BOOK_BY_AUTHOR_COMMAND");
+        request.setCommandName("GET_BOOKS_BY_AUTHOR_COMMAND");
         request.setAuthor(author);
         Response response = controller.doAction(request);
         if (response.getErrorMessage() != null){
@@ -349,36 +350,20 @@ public class View {
             System.out.println("Enter book's title:");
             title = scanner.nextLine();
         }
-        Request findRequest = new Request();
-        findRequest.setCommandName("GET_BOOK_BY_TITLE_COMMAND");
-        findRequest.setTitle(title);
-        Response findResponse = controller.doAction(findRequest);
-        if (findResponse.getErrorMessage() != null){
-            System.out.println(findResponse.getErrorMessage());
+        Request deleteRequest = new Request();
+        deleteRequest.setCommandName("DELETE_BOOK_BY_TITLE_COMMAND");
+        deleteRequest.setTitle(title);
+        Response deleteResponse = controller.doAction(deleteRequest);
+        if (deleteResponse.getErrorMessage() != null){
+            System.out.println(deleteResponse.getErrorMessage());
         } else {
-            System.out.println(findResponse.getMessage());
-            printBook(findResponse.getBook());
-            while (!(command.equals("y") || command.equals("n"))) {
-                System.out.println("Are you sure you want to delete it? (y/n)");
-                command = scanner.nextLine();
-            }
-            if (command.equals("y")) {
-                Request deleteRequest = new Request();
-                deleteRequest.setCommandName("DELETE_BOOK_BY_TITLE_COMMAND");
-                deleteRequest.setTitle(title);
-                Response deleteResponse = controller.doAction(deleteRequest);
-                if (deleteResponse.getErrorMessage() != null){
-                    System.out.println(deleteResponse.getErrorMessage());
-                } else {
-                    System.out.println(deleteResponse.getMessage());
-                }
-            }
+            System.out.println(deleteResponse.getMessage());
         }
     }
 
     private void deleteUserByLogin(){
         String login = "";
-        while (login.isEmpty()){
+        while (login.isEmpty() || user.getLogin().equals(login)){
             System.out.println("Enter users's login");
             login = scanner.nextLine();
         }

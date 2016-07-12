@@ -10,14 +10,14 @@ import by.tr.library.dao.exception.DAOException;
 
 public class SQLUserDao implements UserDao{
 
-
 	@Override
-	public Book getBookByTitle(String title) throws DAOException {
+	public Catalog getBooksByTitle(String title) throws DAOException {
 		return null;
 	}
 
 	@Override
-	public Catalog getBooksByAuthor(String title) throws DAOException {
+	public Catalog getBooksByAuthor(String author) throws DAOException {
 		return null;
 	}
 }
+
