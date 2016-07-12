@@ -23,7 +23,7 @@ public class AuthorizationCommand implements Command{
 		try {
 			result = service.authorization(login, password);
 		} catch (ServiceException e) {
-			throw new CommandException("authorization command exception", e);
+			throw new CommandException("Authorization command exception", e);
 		}
 		Response response = new Response();
 		if (result) {
