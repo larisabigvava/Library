@@ -6,6 +6,8 @@ import by.tr.library.bean.ProgrammerBook;
 import by.tr.library.bean.User;
 import by.tr.library.dao.CommonDao;
 import by.tr.library.dao.exception.DAOException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -20,6 +22,7 @@ import java.util.Scanner;
  */
 public class FileCommonDao implements CommonDao {
 
+    private final static Logger LOGGER = LogManager.getRootLogger();
     private final static FileCommonDao instance = new FileCommonDao();
 
     private final static String BOOKS_FILE = "C:\\Users\\Larisa_Bigvava@epam.com\\Desktop\\Library\\books.txt";
@@ -85,6 +88,7 @@ public class FileCommonDao implements CommonDao {
             user.setRole(role);
             user.setBlocked(false);
         } catch (IOException ex) {
+            LOGGER.error(ex.getMessage());
             throw new DAOException("Registration dao exception", ex);
         }
         return user;
@@ -111,6 +115,7 @@ public class FileCommonDao implements CommonDao {
                                 .append("\n");
                     }
                 } catch (IOException ex) {
+                    LOGGER.error(ex.getMessage());
                     throw new DAOException("Change password dao exception", ex);
                 }
                 result = true;
@@ -145,6 +150,7 @@ public class FileCommonDao implements CommonDao {
 
             }
         } catch (IOException ex) {
+            LOGGER.error(ex.getMessage());
             throw new DAOException("Get catalog dao exception", ex);
         }
         return catalog;
@@ -158,6 +164,7 @@ public class FileCommonDao implements CommonDao {
                 strings.add(scanner.nextLine());
             }
         } catch (IOException ex) {
+            LOGGER.error(ex.getMessage());
             throw new DAOException("File with users data not found!", ex);
         }
         return strings;

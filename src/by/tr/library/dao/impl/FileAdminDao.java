@@ -8,13 +8,12 @@ import by.tr.library.dao.AdminDao;
 import by.tr.library.dao.CommonDao;
 import by.tr.library.dao.DAOFactory;
 import by.tr.library.dao.exception.DAOException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.List;
 
@@ -22,6 +21,8 @@ import java.util.List;
  * Created by Larisa_Bigvava on 7/8/2016.
  */
 public class FileAdminDao implements AdminDao {
+
+    private final static Logger LOGGER = LogManager.getRootLogger();
 
     private final static FileAdminDao instance = new FileAdminDao();
     private final static String BOOKS_FILE = "C:\\Users\\Larisa_Bigvava@epam.com\\Desktop\\Library\\books.txt";
@@ -40,6 +41,7 @@ public class FileAdminDao implements AdminDao {
         DAOFactory factory = DAOFactory.getInstance();
         CommonDao commonDao = factory.getFileCommonDao();
         users = commonDao.readUsersFile();
+        String newUser = "";
         Iterator<String> iterator = users.iterator();
         while (iterator.hasNext()){
             String userStr = iterator.next();
@@ -52,17 +54,20 @@ public class FileAdminDao implements AdminDao {
                 userStr = userStr.substring(user.getPassword().length() + 2);
                 user.setRole(userStr.substring(0, userStr.indexOf("::")));
                 user.setBlocked(true);
-                String newUser = prepareUser(user);
+                newUser = prepareUser(user);
+            }
+        }
+        if (!newUser.isEmpty()) {
+            try (FileOutputStream fos = new FileOutputStream(USERS_FILE, false)) {
+                PrintWriter writer = new PrintWriter(fos);
                 users.add(newUser);
-                try (FileOutputStream fos = new FileOutputStream(USERS_FILE, false)){
-                    PrintWriter writer = new PrintWriter(fos);
-                    writer.println(users);
-                    result = true;
-                } catch (IOException e) {
-                    throw new DAOException("Block user by login dao exception", e);
-                }
+                writer.println(users);
+                result = true;
+            } catch (IOException e) {
+                LOGGER.error(e.getMessage());
+                throw new DAOException("Block user by login dao exception", e);
             }
-            }
+        }
         return result;
     }
 
@@ -72,9 +77,10 @@ public class FileAdminDao implements AdminDao {
         DAOFactory factory = DAOFactory.getInstance();
         CommonDao commonDao = factory.getFileCommonDao();
         users = commonDao.readUsersFile();
+        String newUser = "";
         Iterator<String> iterator = users.iterator();
         while (iterator.hasNext()){
-            String userStr = iterator.next();
+             String userStr = iterator.next();
             if (userStr.startsWith(login)) {
                 iterator.remove();
                 User user = new User();
@@ -84,15 +90,18 @@ public class FileAdminDao implements AdminDao {
                 userStr = userStr.substring(user.getPassword().length() + 2);
                 user.setRole(userStr.substring(0, userStr.indexOf("::")));
                 user.setBlocked(false);
-                String newUser = prepareUser(user);
+                newUser = prepareUser(user);
+            }
+        }
+        if (!newUser.isEmpty()) {
+            try (FileOutputStream fos = new FileOutputStream(USERS_FILE, false)) {
+                PrintWriter writer = new PrintWriter(fos);
                 users.add(newUser);
-                try (FileOutputStream fos = new FileOutputStream(USERS_FILE, false)){
-                    PrintWriter writer = new PrintWriter(fos);
-                    writer.println(users);
-                    result = true;
-                } catch (IOException e) {
-                    throw new DAOException("Unblock user by login dao exception", e);
-                }
+                writer.println(users);
+                result = true;
+            } catch (IOException e) {
+                LOGGER.error(e.getMessage());
+                throw new DAOException("Unblock user by login dao exception", e);
             }
         }
         return result;
@@ -105,6 +114,7 @@ public class FileAdminDao implements AdminDao {
             writer.println(prepareBook(book));
             writer.flush();
         } catch (IOException ex) {
+            LOGGER.error(ex.getMessage());
             throw new DAOException("Add new book dao exception", ex);
         }
         return true;
@@ -142,6 +152,7 @@ public class FileAdminDao implements AdminDao {
                 }
                 writer.flush();
             } catch (IOException ex) {
+                LOGGER.error(ex.getMessage());
                 throw new DAOException("Delete book dao exception", ex);
             }
         }
@@ -190,6 +201,7 @@ public class FileAdminDao implements AdminDao {
                     writer.println(users);
                     result = true;
                 } catch (IOException e) {
+                    LOGGER.error(e.getMessage());
                     throw new DAOException("Unblock user by login dao exception", e);
                 }
             }

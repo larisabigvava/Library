@@ -6,6 +6,8 @@ import by.tr.library.bean.ProgrammerBook;
 import by.tr.library.dao.DAOFactory;
 import by.tr.library.dao.UserDao;
 import by.tr.library.dao.exception.DAOException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;

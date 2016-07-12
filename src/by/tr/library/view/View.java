@@ -136,7 +136,7 @@ public class View {
             login = scanner.nextLine();
         }
         Request request = new Request();
-        request.setCommandName("UNBLOCK_USER_BY_LOGIN_COMMAND");
+        request.setCommandName("BLOCK_USER_BY_LOGIN_COMMAND");
         request.setLogin(login);
         Response response = controller.doAction(request);
         if (response.getErrorMessage() != null){

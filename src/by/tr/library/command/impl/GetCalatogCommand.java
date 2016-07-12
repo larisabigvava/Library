@@ -28,8 +28,8 @@ public class GetCalatogCommand implements Command{
 		}
 		Response response = new Response();
 		if (catalog.getBooks().isEmpty() && catalog.getProgrammerBooks().isEmpty()) {
-			response.setErrorMessage("Library is empty.");
-			response.setMessage(null);
+			response.setMessage("Library is empty.");
+			response.setErrorMessage(null);
 			response.setCatalog(null);
 		} else {
 			response.setErrorMessage(null);
