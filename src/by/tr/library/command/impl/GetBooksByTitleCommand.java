@@ -1,6 +1,7 @@
 package by.tr.library.command.impl;
 
 import by.tr.library.bean.Book;
+import by.tr.library.bean.Catalog;
 import by.tr.library.bean.Request;
 import by.tr.library.bean.Response;
 import by.tr.library.command.Command;
@@ -12,7 +13,7 @@ import by.tr.library.service.exception.ServiceException;
 /**
  * Created by Larisa_Bigvava on 7/8/2016.
  */
-public class GetBookByTitleCommand implements Command {
+public class GetBooksByTitleCommand implements Command {
     @Override
     public Response execute(Request request) throws CommandException {
         String title = request.getTitle();
@@ -20,21 +21,21 @@ public class GetBookByTitleCommand implements Command {
         ServiceFactory factory = ServiceFactory.getInstance();
         LibraryService service = factory.getLibraryService();
         boolean result = false;
-        Book book = null;
+        Catalog catalog = null;
         try {
-            book = service.findByTitle(title);
+            catalog = service.findByTitle(title);
         } catch (ServiceException e) {
             throw new CommandException("get book by title command exception", e);
         }
         Response response = new Response();
-        if (book != null) {
+        if (!(catalog.getBooks().isEmpty() && catalog.getProgrammerBooks().isEmpty())) {
             response.setErrorMessage(null);
-            response.setMessage("Book was founded.");
-            response.setBook(book);
+            response.setMessage("Books were founded.");
+            response.setCatalog(catalog);
         } else {
             response.setErrorMessage("There is no book with this title.");
             response.setMessage(null);
-            response.setBook(null);
+            response.setCatalog(null);
         }
         return response;
     }

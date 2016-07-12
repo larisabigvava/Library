@@ -20,7 +20,7 @@ public class CommandHelper {
 		commands.put(CommandName.DELETE_BOOK_BY_TITLE_COMMAND, new DeleteBookByTitleCommand());
 		commands.put(CommandName.UNBLOCK_USER_BY_LOGIN_COMMAND, new UnblockUserByLoginCommand());
 		commands.put(CommandName.DELETE_USER_BY_LOGIN_COMMAND, new DeleteUserByLoginCommand());
-		commands.put(CommandName.GET_BOOK_BY_TITLE_COMMAND, new GetBookByTitleCommand());
+		commands.put(CommandName.GET_BOOK_BY_TITLE_COMMAND, new GetBooksByTitleCommand());
 		commands.put(CommandName.GET_BOOKS_BY_AUTHOR_COMMAND, new GetBooksByAuthorCommand());
 	}
 	

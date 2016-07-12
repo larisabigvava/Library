@@ -35,11 +35,11 @@ public class View {
                         System.out.println("Enter new command");
                         break;
                     case "3":
-                        getBookByTitle();
+                        getBooksByTitle();
                         System.out.println("Enter new command");
                         break;
                     case "4":
-                        findBooksByAuthor();
+                        getBooksByAuthor();
                         System.out.println("Enter new command");
                         break;
                     case "5":
@@ -87,11 +87,11 @@ public class View {
                         System.out.println("Enter new command");
                         break;
                     case "3":
-                        getBookByTitle();
+                        getBooksByTitle();
                         System.out.println("Enter new command");
                         break;
                     case "4":
-                        findBooksByAuthor();
+                        getBooksByAuthor();
                         System.out.println("Enter new command");
                         break;
                     case "5":
@@ -220,7 +220,7 @@ public class View {
         }
     }
 
-    private void getBookByTitle(){
+    private void getBooksByTitle(){
         String title = "";
         while (title.isEmpty()){
             System.out.println("Enter book's title:");
@@ -234,7 +234,12 @@ public class View {
             System.out.println(response.getErrorMessage());
         } else {
             System.out.println(response.getMessage());
-            printBook(response.getBook());
+            for (Book book: response.getCatalog().getBooks()) {
+                printBook(book);
+            }
+            for (ProgrammerBook programmerBook: response.getCatalog().getProgrammerBooks()) {
+                printBook(programmerBook);
+            }
         }
 
     }
@@ -250,7 +255,7 @@ public class View {
         }
     }
 
-    private void findBooksByAuthor(){
+    private void getBooksByAuthor(){
         String author = "";
         while (author.isEmpty()){
             System.out.println("Enter book's author:");
@@ -264,7 +269,12 @@ public class View {
             System.out.println(response.getErrorMessage());
         } else {
             System.out.println(response.getMessage());
-            printBook(response.getBook());
+            for (Book book: response.getCatalog().getBooks()) {
+                printBook(book);
+            }
+            for (ProgrammerBook programmerBook: response.getCatalog().getProgrammerBooks()) {
+                printBook(programmerBook);
+            }
         }
     }
 

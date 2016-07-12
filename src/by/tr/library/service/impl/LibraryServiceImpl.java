@@ -32,19 +32,19 @@ public class LibraryServiceImpl implements LibraryService{
 	}
 
 	@Override
-	public Book findByTitle(String title) throws ServiceException {
-		Book book = null;
+	public Catalog findByTitle(String title) throws ServiceException {
+		Catalog catalog = null;
 
 		DAOFactory factory = DAOFactory.getInstance();
 		UserDao fileUserDao = factory.getFileUserDao();
 
 		try {
-			book = fileUserDao.getBookByTitle(title);
+			catalog = fileUserDao.getBooksByTitle(title);
 		} catch (DAOException e){
 			throw new ServiceException("find book service exception", e);
 		}
 
-		return book;
+		return catalog;
 	}
 
 	@Override
@@ -54,7 +54,6 @@ public class LibraryServiceImpl implements LibraryService{
 		DAOFactory factory = DAOFactory.getInstance();
 		AdminDao adminDao = factory.getFileAdminDao();
 		
-		// call method check
 		try {
 			result = adminDao.addNewBook(book);
 		} catch (DAOException e) {

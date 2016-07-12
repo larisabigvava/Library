@@ -7,6 +7,6 @@ import by.tr.library.bean.Catalog;
 import by.tr.library.dao.exception.DAOException;
 
 public interface UserDao {
-	Book getBookByTitle(String title) throws DAOException;
-	Catalog getBooksByAuthor(String title) throws DAOException;
+	Catalog getBooksByTitle(String title) throws DAOException;
+	Catalog getBooksByAuthor(String author) throws DAOException;
 }

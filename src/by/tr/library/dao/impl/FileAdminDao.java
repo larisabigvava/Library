@@ -178,8 +178,24 @@ public class FileAdminDao implements AdminDao {
 
     @Override
     public boolean deleteUserByLogin(String login) throws DAOException {
-        //TODO
-        return false;
+        DAOFactory daoFactory = DAOFactory.getInstance();
+        users = daoFactory.getFileCommonDao().readUsersFile();
+        boolean result = false;
+        Iterator<String> iterator = users.iterator();
+        while (iterator.hasNext()){
+            String userStr = iterator.next();
+            if (userStr.startsWith(login)) {
+                iterator.remove();
+                try (FileOutputStream fos = new FileOutputStream(USERS_FILE, false)){
+                    PrintWriter writer = new PrintWriter(fos);
+                    writer.println(users);
+                    result = true;
+                } catch (IOException e) {
+                    throw new DAOException("Unblock user by login dao exception", e);
+                }
+            }
+        }
+        return result;
     }
 
 
