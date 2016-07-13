@@ -61,7 +61,9 @@ public class FileAdminDao implements AdminDao {
             try (FileOutputStream fos = new FileOutputStream(USERS_FILE, false)) {
                 PrintWriter writer = new PrintWriter(fos);
                 users.add(newUser);
-                writer.println(users);
+                for(String user : users){
+                    writer.println(user);
+                }
                 result = true;
             } catch (IOException e) {
                 LOGGER.error(e.getMessage());
@@ -97,7 +99,9 @@ public class FileAdminDao implements AdminDao {
             try (FileOutputStream fos = new FileOutputStream(USERS_FILE, false)) {
                 PrintWriter writer = new PrintWriter(fos);
                 users.add(newUser);
-                writer.println(users);
+                for(String user : users){
+                    writer.println(user);
+                }
                 result = true;
             } catch (IOException e) {
                 LOGGER.error(e.getMessage());
