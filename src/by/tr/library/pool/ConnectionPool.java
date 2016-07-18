@@ -55,7 +55,7 @@ public class ConnectionPool {
         return instance;
     }
 
-    void addConnection() {
+    private void addConnection() {
         boolean added = false;
         int attempts = 0;
         while (!added) {
@@ -114,15 +114,5 @@ public class ConnectionPool {
             }
         } catch (InterruptedException ex) {
         }
-    }
-
-    boolean checkPoolSize() {
-        int currentPoolSize = availableConnections.size() + usedConnections.size();
-
-        return currentPoolSize == poolSize;
-    }
-
-    public int getPoolSize(){
-        return usedConnections.size() + availableConnections.size();
     }
 }

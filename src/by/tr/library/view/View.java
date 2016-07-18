@@ -152,7 +152,7 @@ public class View {
             System.out.println("Please enter your login:");
             login = scanner.nextLine();
         }
-        while (password1.isEmpty()){
+        while (password1.isEmpty() || password1.equals(login)){
             System.out.println("Please enter your password:");
             password1 = scanner.nextLine();
         }

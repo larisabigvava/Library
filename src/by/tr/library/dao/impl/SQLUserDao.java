@@ -15,10 +15,10 @@ import by.tr.library.dao.exception.DAOException;
 import by.tr.library.pool.ConnectionPool;
 
 public class SQLUserDao implements UserDao{
-	private static final String SELECT_BOOK_BY_TITLE = "SELECT * FROM `books` WHERE `title`=?";
-	private static final String SELECT_PROGRAMMER_BOOK_BY_TITLE = "SELECT * FROM `programmer_books` WHERE `title`=?";
-	private static final String SELECT_BOOK_BY_AUTHOR = "SELECT * FROM `books` WHERE `author`=?";
-	private static final String SELECT_PROGRAMMER_BOOK_BY_AUTHOR = "SELECT * FROM `programmer_books` WHERE `title`=?";
+	private static final String SELECT_BOOK_BY_TITLE = "SELECT * FROM `books` WHERE `title`= ?";
+	private static final String SELECT_PROGRAMMER_BOOK_BY_TITLE = "SELECT * FROM `programmer_books` WHERE `title`= ?";
+	private static final String SELECT_BOOK_BY_AUTHOR = "SELECT * FROM `books` WHERE `author`= ?";
+	private static final String SELECT_PROGRAMMER_BOOK_BY_AUTHOR = "SELECT * FROM `programmer_books` WHERE `title`= ?";
 
 
 	@Override

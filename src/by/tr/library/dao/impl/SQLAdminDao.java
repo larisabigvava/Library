@@ -16,7 +16,6 @@ public class SQLAdminDao implements AdminDao {
 	private static final String UPDATE_USER_BLOCKED = "UPDATE `users` SET `blocked`=`0` WHERE `login`=?";
 	private static final String UPDATE_USER_UNBLOCKED = "UPDATE `users` SET `blocked`=`1` WHERE `login`=?";
 	private static final String DELETE_USER_BY_LOGIN = "DELETE FROM `users` WHERE `login`=?";
-
 	private static final String INSERT_BOOK = "INSERT INTO `books`(`title`,`author`,`price`) VALUES(?,?,?)";
 	private static final String INSERT_PROGRAMMER_BOOK = "INSERT INTO `programmer_books` (`title`,`author`,`price`," +
 			"`language`,`level`) VALUES(?,?,?,?,?)";

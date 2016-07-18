@@ -12,7 +12,7 @@ import by.tr.library.pool.ConnectionPool;
 
 public class SQLCommonDao implements CommonDao {
     private static final String UPDATE_USER_PASSWORD = "UPDATE `users` SET `password`=? WHERE `login`=?";
-    private static final String INSERT_NEW_USER = "INSERT INTO `users` (`login`,`password`, `role`, `blocked`) VALUES(?,?,?,?,?)";
+    private static final String INSERT_NEW_USER = "INSERT INTO `users`(`login`,`password`,`role`,`blocked`) VALUES(?,?,?,?)";
 	private static final String SELECT_USERS_BY_LOGIN = "SELECT * FROM `users` WHERE `login` = ?";
 	private static final String SELECT_USERS = "SELECT * FROM `users`";
 	private static final String SELECT_BOOKS = "SELECT * FROM `books`";
@@ -38,7 +38,7 @@ public class SQLCommonDao implements CommonDao {
 	public User registration(String login, String password) throws DAOException {
 		User user = null;
         String role;
-		if (isUsersEmpty(login)){
+		if (isUsersEmpty()){
             role = "ADMIN";
 		} else {
 		    role = "USER";
@@ -64,7 +64,7 @@ public class SQLCommonDao implements CommonDao {
 		return user;
 	}
 
-	private boolean isUsersEmpty(String login) throws DAOException {
+	private boolean isUsersEmpty() throws DAOException {
 		boolean result = false;
 		try (
 				Connection connection = ConnectionPool.getInstance().getConnection();
