@@ -28,7 +28,7 @@ public class FileUserDao implements UserDao {
         return instance;
     }
 
-    private FileUserDao(){}
+    public FileUserDao(){}
 
     @Override
     public Catalog getBooksByTitle(String title) throws DAOException {

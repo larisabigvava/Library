@@ -8,6 +8,7 @@ import by.tr.library.dao.AdminDao;
 import by.tr.library.dao.CommonDao;
 import by.tr.library.dao.DAOFactory;
 import by.tr.library.dao.exception.DAOException;
+import by.tr.library.dao.util.ReadUsersFile;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -33,14 +34,14 @@ public class FileAdminDao implements AdminDao {
         return instance;
     }
 
-    private FileAdminDao(){}
+    public FileAdminDao(){}
 
     @Override
     public boolean blockUserByLogin(String login) throws DAOException {
         boolean result = false;
         DAOFactory factory = DAOFactory.getInstance();
         CommonDao commonDao = factory.getFileCommonDao();
-        users = commonDao.readUsersFile();
+        users = ReadUsersFile.readUsers();
         String newUser = "";
         Iterator<String> iterator = users.iterator();
         while (iterator.hasNext()){
@@ -78,7 +79,7 @@ public class FileAdminDao implements AdminDao {
         boolean result = false;
         DAOFactory factory = DAOFactory.getInstance();
         CommonDao commonDao = factory.getFileCommonDao();
-        users = commonDao.readUsersFile();
+        users = ReadUsersFile.readUsers();
         String newUser = "";
         Iterator<String> iterator = users.iterator();
         while (iterator.hasNext()){
@@ -193,7 +194,7 @@ public class FileAdminDao implements AdminDao {
     @Override
     public boolean deleteUserByLogin(String login) throws DAOException {
         DAOFactory daoFactory = DAOFactory.getInstance();
-        users = daoFactory.getFileCommonDao().readUsersFile();
+        users = ReadUsersFile.readUsers();
         boolean result = false;
         Iterator<String> iterator = users.iterator();
         while (iterator.hasNext()){

@@ -11,6 +11,4 @@ public interface CommonDao {
 	User registration(String login, String password) throws DAOException;
 	boolean changePassword(String login, String password) throws DAOException;
 	Catalog getCatalog() throws DAOException;
-	public List<String> readUsersFile() throws DAOException;
-
 }

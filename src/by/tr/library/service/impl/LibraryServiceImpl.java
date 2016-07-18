@@ -20,7 +20,7 @@ public class LibraryServiceImpl implements LibraryService{
 		Catalog catalog = null;
 
 		DAOFactory factory = DAOFactory.getInstance();
-		UserDao fileUserDao = factory.getFileUserDao();
+		UserDao fileUserDao = factory.getSqlUserDao();
 
 		try {
 			catalog = fileUserDao.getBooksByAuthor(author);
@@ -36,7 +36,7 @@ public class LibraryServiceImpl implements LibraryService{
 		Catalog catalog = null;
 
 		DAOFactory factory = DAOFactory.getInstance();
-		UserDao fileUserDao = factory.getFileUserDao();
+		UserDao fileUserDao = factory.getSqlUserDao();
 
 		try {
 			catalog = fileUserDao.getBooksByTitle(title);
@@ -52,7 +52,7 @@ public class LibraryServiceImpl implements LibraryService{
 		boolean result = false;
 
 		DAOFactory factory = DAOFactory.getInstance();
-		AdminDao adminDao = factory.getFileAdminDao();
+		AdminDao adminDao = factory.getSqlAdminDao();
 		
 		try {
 			result = adminDao.addNewBook(book);
@@ -68,7 +68,7 @@ public class LibraryServiceImpl implements LibraryService{
 		boolean result = false;
 
 		DAOFactory factory = DAOFactory.getInstance();
-		AdminDao adminDao = factory.getFileAdminDao();
+		AdminDao adminDao = factory.getSqlAdminDao();
 
 		try {
 			result = adminDao.deleteBookByTitle(title);
@@ -83,7 +83,7 @@ public class LibraryServiceImpl implements LibraryService{
 	public Catalog getCatalog() throws ServiceException {
 		
 		DAOFactory factory = DAOFactory.getInstance();
-		CommonDao commonDao = factory.getFileCommonDao();
+		CommonDao commonDao = factory.getSqlCommonDao();
 		
 		Catalog catalog = null;
 		try {

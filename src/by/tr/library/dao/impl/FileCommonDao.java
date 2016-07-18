@@ -6,6 +6,7 @@ import by.tr.library.bean.ProgrammerBook;
 import by.tr.library.bean.User;
 import by.tr.library.dao.CommonDao;
 import by.tr.library.dao.exception.DAOException;
+import by.tr.library.dao.util.ReadUsersFile;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -33,12 +34,12 @@ public class FileCommonDao implements CommonDao {
         return instance;
     }
 
-    private FileCommonDao(){}
+    public FileCommonDao(){}
 
     @Override
     public User authorization(String login, String password) throws DAOException {
         if (users == null){
-            users = readUsersFile();
+            users = ReadUsersFile.readUsers();
         }
         User user = null;
         String roleAdmin = "ADMIN";
@@ -67,7 +68,7 @@ public class FileCommonDao implements CommonDao {
     @Override
     public User registration(String login, String password) throws DAOException {
         if (users == null){
-            users = readUsersFile();
+            users = ReadUsersFile.readUsers();
         }
         User user = null;
         String role = (users.size() == 0) ? "ADMIN" : "USER";
@@ -156,17 +157,4 @@ public class FileCommonDao implements CommonDao {
         return catalog;
     }
 
-    public List<String> readUsersFile() throws DAOException {
-        List<String> strings = new ArrayList<>();
-        try (FileInputStream fis = new FileInputStream(new File(USERS_FILE))) {
-            Scanner scanner = new Scanner(fis);
-            while (scanner.hasNextLine()) {
-                strings.add(scanner.nextLine());
-            }
-        } catch (IOException ex) {
-            LOGGER.error(ex.getMessage());
-            throw new DAOException("File with users data not found!", ex);
-        }
-        return strings;
-    }
 }

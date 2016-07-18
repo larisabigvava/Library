@@ -15,7 +15,7 @@ public class ClientServiceImpl implements ClientService{
 		User user = null;
 
 		DAOFactory factory = DAOFactory.getInstance();
-		CommonDao fileCommonDao = factory.getFileCommonDao();
+		CommonDao fileCommonDao = factory.getSqlCommonDao();
 
 		try {
 			user = fileCommonDao.authorization(login, password);
@@ -31,7 +31,7 @@ public class ClientServiceImpl implements ClientService{
 		User user = null;
 
 		DAOFactory factory = DAOFactory.getInstance();
-		CommonDao fileCommonDao = factory.getFileCommonDao();
+		CommonDao fileCommonDao = factory.getSqlCommonDao();
 
 		try {
 			user = fileCommonDao.registration(login, password);
@@ -48,7 +48,7 @@ public class ClientServiceImpl implements ClientService{
 		boolean result;
 
 		DAOFactory factory = DAOFactory.getInstance();
-		AdminDao adminDao = factory.getFileAdminDao();
+		AdminDao adminDao = factory.getSqlAdminDao();
 
 		try {
 			result = adminDao.deleteUserByLogin(login);
@@ -64,7 +64,7 @@ public class ClientServiceImpl implements ClientService{
 		boolean result;
 
 		DAOFactory factory = DAOFactory.getInstance();
-		AdminDao adminDao = factory.getFileAdminDao();
+		AdminDao adminDao = factory.getSqlAdminDao();
 
 		try {
 			result = adminDao.blockUserByLogin(login);
@@ -80,7 +80,7 @@ public class ClientServiceImpl implements ClientService{
 		boolean result;
 
 		DAOFactory factory = DAOFactory.getInstance();
-		CommonDao commonDao = factory.getFileCommonDao();
+		CommonDao commonDao = factory.getSqlCommonDao();
 
 		try {
 			result = commonDao.changePassword(login, password);
@@ -96,7 +96,7 @@ public class ClientServiceImpl implements ClientService{
 		boolean result;
 
 		DAOFactory factory = DAOFactory.getInstance();
-		AdminDao adminDao = factory.getFileAdminDao();
+		AdminDao adminDao = factory.getSqlAdminDao();
 
 		try {
 			result = adminDao.unblockUserByLogin(login);

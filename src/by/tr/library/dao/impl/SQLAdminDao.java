@@ -21,8 +21,8 @@ public class SQLAdminDao implements AdminDao {
 	private static final String INSERT_PROGRAMMER_BOOK = "INSERT INTO `programmer_books` (`title`,`author`,`price`," +
 			"`language`,`level`) VALUES(?,?,?,?,?)";
 	private static final String DELETE_BOOK_BY_TITLE = "DELETE FROM `books` WHERE `title`=?";
-	private static final String SELECT_BOOK_BY_TITLE = "SELECT `author` FROM `books` WHERE `title`=?";
-	private static final String SELECT_PROGRAMMER_BOOK_BY_TITLE = "SELECT `author` FROM `programmer_books` WHERE `title`=?";
+	private static final String SELECT_BOOK_BY_TITLE = "SELECT * FROM `books` WHERE `title`=?";
+	private static final String SELECT_PROGRAMMER_BOOK_BY_TITLE = "SELECT * FROM `programmer_books` WHERE `title`=?";
 	private static final String DELETE_PROGRAMMER_BOOK_BY_TITLE = "DELETE FROM `programmer_books` WHERE `title`=?";
 
 	@Override
@@ -130,7 +130,7 @@ public class SQLAdminDao implements AdminDao {
 		return result;
 	}
 
-	public boolean selectBookByTitle(String title) throws DAOException {
+	private boolean selectBookByTitle(String title) throws DAOException {
 		boolean result = false;
 		try (
 				Connection booksConnection = ConnectionPool.getInstance().getConnection();
@@ -147,7 +147,7 @@ public class SQLAdminDao implements AdminDao {
 		return result;
 	}
 
-	public boolean selectProgrammerBooksByTitle(String title) throws DAOException {
+	private boolean selectProgrammerBooksByTitle(String title) throws DAOException {
 		boolean result = false;
 		try (
 				Connection programmerBooksConnection = ConnectionPool.getInstance().getConnection();
