@@ -14,7 +14,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public class ConnectionPool {
     private static final int CREATE_ATTEMPTS = 5;
     private static final long CLOSE_TIMEOUT_SEC = 1;
-    private static final String DRIVER = "com.mysql.jdbc.Driver ";
+    private static final String DRIVER = "com.mysql.jdbc.Driver";
 
     private static AtomicBoolean created = new AtomicBoolean(false);
     private static ConnectionPool instance;

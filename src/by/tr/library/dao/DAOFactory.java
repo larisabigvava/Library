@@ -14,6 +14,7 @@ public class DAOFactory {
 	private final CommonDao sqlCommonDao = new SQLCommonDao();
 	private final UserDao sqlUserDao = new SQLUserDao();
 	private final AdminDao sqlAdminDao = new SQLAdminDao();
+
 	private final CommonDao fileCommonDao = new FileCommonDao();
 	private final UserDao fileUserDao = new FileUserDao();
 	private final AdminDao fileAdminDao = new FileAdminDao();

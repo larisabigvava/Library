@@ -1,7 +1,6 @@
 package by.tr.library.dao.impl;
 
 import java.sql.*;
-import java.util.List;
 
 import by.tr.library.bean.Book;
 import by.tr.library.bean.Catalog;

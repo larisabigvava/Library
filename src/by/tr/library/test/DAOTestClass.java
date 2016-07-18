@@ -8,6 +8,8 @@ import by.tr.library.dao.exception.DAOException;
 import by.tr.library.dao.impl.FileUserDao;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
+
 /**
  * Created by Seagull on 12.07.2016.
  */

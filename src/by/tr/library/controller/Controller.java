@@ -19,7 +19,7 @@ public class Controller {
 			response = command.execute(request);
 		} catch (CommandException e) {
 			response = new Response();
-			response.setErrorMessage("controller exception");
+			response.setErrorMessage("Controller exception");
 		}
 		return response;
 		

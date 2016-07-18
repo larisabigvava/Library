@@ -201,15 +201,15 @@ public class FileAdminDao implements AdminDao {
             String userStr = iterator.next();
             if (userStr.startsWith(login)) {
                 iterator.remove();
-                try (FileOutputStream fos = new FileOutputStream(USERS_FILE, false)){
-                    PrintWriter writer = new PrintWriter(fos);
-                    writer.println(users);
-                    result = true;
-                } catch (IOException e) {
-                    LOGGER.error(e.getMessage());
-                    throw new DAOException("Unblock user by login dao exception", e);
-                }
             }
+        }
+        try (FileOutputStream fos = new FileOutputStream(USERS_FILE, false)){
+            PrintWriter writer = new PrintWriter(fos);
+            writer.println(users);
+            result = true;
+        } catch (IOException e) {
+            LOGGER.error(e.getMessage());
+            throw new DAOException("Unblock user by login dao exception", e);
         }
         return result;
     }

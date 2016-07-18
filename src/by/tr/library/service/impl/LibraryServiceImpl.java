@@ -20,10 +20,10 @@ public class LibraryServiceImpl implements LibraryService{
 		Catalog catalog = null;
 
 		DAOFactory factory = DAOFactory.getInstance();
-		UserDao fileUserDao = factory.getSqlUserDao();
+		UserDao userDao = factory.getSqlUserDao();
 
 		try {
-			catalog = fileUserDao.getBooksByAuthor(author);
+			catalog = userDao.getBooksByAuthor(author);
 		} catch (DAOException e){
 			throw new ServiceException("Find book by author service exception", e);
 		}
@@ -36,10 +36,10 @@ public class LibraryServiceImpl implements LibraryService{
 		Catalog catalog = null;
 
 		DAOFactory factory = DAOFactory.getInstance();
-		UserDao fileUserDao = factory.getSqlUserDao();
+		UserDao userDao = factory.getSqlUserDao();
 
 		try {
-			catalog = fileUserDao.getBooksByTitle(title);
+			catalog = userDao.getBooksByTitle(title);
 		} catch (DAOException e){
 			throw new ServiceException("Find book by title service exception", e);
 		}

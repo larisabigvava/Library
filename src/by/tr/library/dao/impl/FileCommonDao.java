@@ -148,7 +148,6 @@ public class FileCommonDao implements CommonDao {
                     book.setPrice(Integer.parseInt(recordFields[2]));
                     catalog.addBook(book);
                 }
-
             }
         } catch (IOException ex) {
             LOGGER.error(ex.getMessage());

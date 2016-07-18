@@ -15,10 +15,10 @@ public class ClientServiceImpl implements ClientService{
 		User user = null;
 
 		DAOFactory factory = DAOFactory.getInstance();
-		CommonDao fileCommonDao = factory.getSqlCommonDao();
+		CommonDao commonDao = factory.getSqlCommonDao();
 
 		try {
-			user = fileCommonDao.authorization(login, password);
+			user = commonDao.authorization(login, password);
 		} catch (DAOException e) {
 			throw new ServiceException("Authorization service exception", e);
 		}
@@ -31,10 +31,10 @@ public class ClientServiceImpl implements ClientService{
 		User user = null;
 
 		DAOFactory factory = DAOFactory.getInstance();
-		CommonDao fileCommonDao = factory.getSqlCommonDao();
+		CommonDao commonDao = factory.getSqlCommonDao();
 
 		try {
-			user = fileCommonDao.registration(login, password);
+			user = commonDao.registration(login, password);
 		} catch (DAOException e) {
 			throw new ServiceException("Registration service exception", e);
 		}
