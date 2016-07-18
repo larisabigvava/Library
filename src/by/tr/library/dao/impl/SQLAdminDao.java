@@ -8,17 +8,10 @@ import by.tr.library.pool.ConnectionPool;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class SQLAdminDao implements AdminDao {
-	private static final String COLUMN_NAME_LOGIN = "login";
-	private static final String COLUMN_NAME_PASSWORD = "password";
-
-	private static final String COLUMN_NAME_TITLE = "title";
-	private static final String COLUMN_NAME_AUTHOR = "author";
-	private static final String COLUMN_NAME_PRICE = "price";
-	private static final String COLUMN_NAME_LEVEL = "level";
-	private static final String COLUMN_NAME_LANGUAGE = "language";
 
 	private static final String UPDATE_USER_BLOCKED = "UPDATE `users` SET `blocked`=`0` WHERE `login`=?";
 	private static final String UPDATE_USER_UNBLOCKED = "UPDATE `users` SET `blocked`=`1` WHERE `login`=?";
@@ -28,6 +21,8 @@ public class SQLAdminDao implements AdminDao {
 	private static final String INSERT_PROGRAMMER_BOOK = "INSERT INTO `programmer_books` (`title`,`author`,`price`," +
 			"`language`,`level`) VALUES(?,?,?,?,?)";
 	private static final String DELETE_BOOK_BY_TITLE = "DELETE FROM `books` WHERE `title`=?";
+	private static final String SELECT_BOOK_BY_TITLE = "SELECT `author` FROM `books` WHERE `title`=?";
+	private static final String SELECT_PROGRAMMER_BOOK_BY_TITLE = "SELECT `author` FROM `programmer_books` WHERE `title`=?";
 	private static final String DELETE_PROGRAMMER_BOOK_BY_TITLE = "DELETE FROM `programmer_books` WHERE `title`=?";
 
 	@Override
@@ -87,7 +82,7 @@ public class SQLAdminDao implements AdminDao {
 		} else {
 			try (
 					Connection connection = ConnectionPool.getInstance().getConnection();
-					PreparedStatement statement = connection.prepareStatement(INSERT_PROGRAMMER_BOOK)
+					PreparedStatement statement = connection.prepareStatement(INSERT_BOOK)
 			) {
 				statement.setString(1, book.getTitle());
 				statement.setString(2, book.getAuthor());
@@ -104,11 +99,86 @@ public class SQLAdminDao implements AdminDao {
 
 	@Override
 	public boolean deleteBookByTitle(String title) throws DAOException {
-		return false;
+		boolean result = false;
+		if (selectBookByTitle(title)){
+			try (
+					Connection booksConnection = ConnectionPool.getInstance().getConnection();
+					PreparedStatement deleteBooksStatement = booksConnection.prepareStatement(DELETE_BOOK_BY_TITLE)
+					){
+				deleteBooksStatement.setString(1, title);
+				if (deleteBooksStatement.executeUpdate() != 0){
+					result = true;
+				}
+
+			} catch (SQLException e) {
+				throw new DAOException("Deleting book by title dao exception", e);
+			}
+		} else if (selectProgrammerBooksByTitle(title)){
+			try (
+					Connection programmerBooksConnection = ConnectionPool.getInstance().getConnection();
+					PreparedStatement deleteProgrammerBooksStatement = programmerBooksConnection.prepareStatement(DELETE_PROGRAMMER_BOOK_BY_TITLE)
+			){
+				deleteProgrammerBooksStatement.setString(1, title);
+				if (deleteProgrammerBooksStatement.executeUpdate() != 0){
+					result = true;
+				}
+
+			} catch (SQLException e) {
+				throw new DAOException("Deleting programmer book by title dao exception", e);
+			}
+		}
+		return result;
+	}
+
+	public boolean selectBookByTitle(String title) throws DAOException {
+		boolean result = false;
+		try (
+				Connection booksConnection = ConnectionPool.getInstance().getConnection();
+				PreparedStatement selectBooksStatement = booksConnection.prepareStatement(SELECT_BOOK_BY_TITLE)
+		){
+			selectBooksStatement.setString(1, title);
+			ResultSet setOfBooks = selectBooksStatement.executeQuery();
+			if (setOfBooks.next()) {
+				result = true;
+			}
+		} catch (SQLException e) {
+			throw new DAOException("Selecting by title dao exception", e);
+		}
+		return result;
+	}
+
+	public boolean selectProgrammerBooksByTitle(String title) throws DAOException {
+		boolean result = false;
+		try (
+				Connection programmerBooksConnection = ConnectionPool.getInstance().getConnection();
+				PreparedStatement selectProgrammerBooksStatement = programmerBooksConnection.prepareStatement(SELECT_PROGRAMMER_BOOK_BY_TITLE)
+		) {
+			selectProgrammerBooksStatement.setString(1, title);
+			ResultSet setOfProgrammerBooks = selectProgrammerBooksStatement.executeQuery();
+			if (setOfProgrammerBooks.next()) {
+				result = true;
+			}
+		} catch (SQLException e) {
+			throw new DAOException("Selecting programmer books by title dao exception", e);
+		}
+		return result;
 	}
 
 	@Override
 	public boolean deleteUserByLogin(String login) throws DAOException {
-		return false;
+		boolean result = false;
+		try (
+				Connection connection = ConnectionPool.getInstance().getConnection();
+				PreparedStatement statement = connection.prepareStatement(DELETE_USER_BY_LOGIN)
+				){
+			statement.setString(1, login);
+			if (statement.executeUpdate() == 1){
+				result = true;
+			}
+		} catch (SQLException e) {
+			throw new DAOException("Deleting user by login exception", e);
+		}
+
+		return result;
 	}
 }
