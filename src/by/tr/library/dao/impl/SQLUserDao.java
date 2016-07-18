@@ -4,8 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 import by.tr.library.bean.Book;
 import by.tr.library.bean.Catalog;
@@ -15,6 +13,11 @@ import by.tr.library.dao.exception.DAOException;
 import by.tr.library.pool.ConnectionPool;
 
 public class SQLUserDao implements UserDao{
+	private static final String COLUMN_NAME_TITLE = "title";
+	private static final String COLUMN_NAME_AUTHOR = "author";
+	private static final String COLUMN_NAME_PRICE = "price";
+	private static final String COLUMN_NAME_LEVEL = "level";
+	private static final String COLUMN_NAME_LANGUAGE = "language";
 	private static final String SELECT_BOOK_BY_TITLE = "SELECT * FROM `books` WHERE `title`= ?";
 	private static final String SELECT_PROGRAMMER_BOOK_BY_TITLE = "SELECT * FROM `programmer_books` WHERE `title`= ?";
 	private static final String SELECT_BOOK_BY_AUTHOR = "SELECT * FROM `books` WHERE `author`= ?";
@@ -35,18 +38,18 @@ public class SQLUserDao implements UserDao{
 				catalog = new Catalog();
 				while (setOfBooks.next()){
 					Book book = new Book();
-					book.setTitle(setOfBooks.getString(1));
-					book.setAuthor(setOfBooks.getString(2));
-					book.setPrice(setOfBooks.getInt(3));
+					book.setTitle(setOfBooks.getString(COLUMN_NAME_TITLE));
+					book.setAuthor(setOfBooks.getString(COLUMN_NAME_AUTHOR));
+					book.setPrice(setOfBooks.getInt(COLUMN_NAME_PRICE));
 					catalog.addBook(book);
 				}
 				while (setOfProgrammerBooks.next()){
 					ProgrammerBook programmerBook = new ProgrammerBook();
-					programmerBook.setTitle(setOfBooks.getString(1));
-					programmerBook.setAuthor(setOfBooks.getString(2));
-					programmerBook.setPrice(setOfBooks.getInt(3));
-					programmerBook.setLanguage(setOfBooks.getString(4));
-					programmerBook.setLevel(setOfBooks.getString(5));
+					programmerBook.setTitle(setOfBooks.getString(COLUMN_NAME_TITLE));
+					programmerBook.setAuthor(setOfBooks.getString(COLUMN_NAME_AUTHOR));
+					programmerBook.setPrice(setOfBooks.getInt(COLUMN_NAME_PRICE));
+					programmerBook.setLanguage(setOfBooks.getString(COLUMN_NAME_LANGUAGE));
+					programmerBook.setLevel(setOfBooks.getString(COLUMN_NAME_LEVEL));
 					catalog.addProgrammerBook(programmerBook);
 				}
 			}
@@ -70,18 +73,18 @@ public class SQLUserDao implements UserDao{
 				catalog = new Catalog();
 				while (setOfBooks.next()){
 					Book book = new Book();
-					book.setTitle(setOfBooks.getString(1));
-					book.setAuthor(setOfBooks.getString(2));
-					book.setPrice(setOfBooks.getInt(3));
+					book.setTitle(setOfBooks.getString(COLUMN_NAME_TITLE));
+					book.setAuthor(setOfBooks.getString(COLUMN_NAME_AUTHOR));
+					book.setPrice(setOfBooks.getInt(COLUMN_NAME_PRICE));
 					catalog.addBook(book);
 				}
 				while (setOfProgrammerBooks.next()){
 					ProgrammerBook programmerBook = new ProgrammerBook();
-					programmerBook.setTitle(setOfBooks.getString(1));
-					programmerBook.setAuthor(setOfBooks.getString(2));
-					programmerBook.setPrice(setOfBooks.getInt(3));
-					programmerBook.setLanguage(setOfBooks.getString(4));
-					programmerBook.setLevel(setOfBooks.getString(5));
+					programmerBook.setTitle(setOfBooks.getString(COLUMN_NAME_TITLE));
+					programmerBook.setAuthor(setOfBooks.getString(COLUMN_NAME_AUTHOR));
+					programmerBook.setPrice(setOfBooks.getInt(COLUMN_NAME_PRICE));
+					programmerBook.setLanguage(setOfBooks.getString(COLUMN_NAME_LANGUAGE));
+					programmerBook.setLevel(setOfBooks.getString(COLUMN_NAME_LEVEL));
 					catalog.addProgrammerBook(programmerBook);
 				}
 			}

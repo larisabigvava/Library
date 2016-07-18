@@ -11,6 +11,15 @@ import by.tr.library.dao.exception.DAOException;
 import by.tr.library.pool.ConnectionPool;
 
 public class SQLCommonDao implements CommonDao {
+    private static final String COLUMN_NAME_LOGIN = "login";
+    private static final String COLUMN_NAME_PASSWORD = "password";
+    private static final String COLUMN_NAME_TITLE = "title";
+    private static final String COLUMN_NAME_AUTHOR = "author";
+    private static final String COLUMN_NAME_PRICE = "price";
+    private static final String COLUMN_NAME_LEVEL = "level";
+    private static final String COLUMN_NAME_LANGUAGE = "language";
+    private static final String COLUMN_NAME_BLOCKED = "blocked";
+    private static final String COLUMN_NAME_ROLE = "role";
     private static final String UPDATE_USER_PASSWORD = "UPDATE `users` SET `password`=? WHERE `login`=?";
     private static final String INSERT_NEW_USER = "INSERT INTO `users`(`login`,`password`,`role`,`blocked`) VALUES(?,?,?,?)";
 	private static final String SELECT_USERS_BY_LOGIN = "SELECT * FROM `users` WHERE `login` = ?";
@@ -18,7 +27,7 @@ public class SQLCommonDao implements CommonDao {
 	private static final String SELECT_BOOKS = "SELECT * FROM `books`";
 	private static final String SELECT_PROGRAMMER_BOOKS = "SELECT * FROM `programmer_books`";
 
-	@Override
+    @Override
 	public User authorization(String login, String password) throws DAOException {
 		User foundedUser = selectUserByLogin(login);
         User user = null;
@@ -71,7 +80,7 @@ public class SQLCommonDao implements CommonDao {
 				Statement statement = connection.createStatement();
 				){
             ResultSet set = statement.executeQuery(SELECT_USERS);
-            if (set.next()){
+            if (!set.next()){
                 result = true;
             }
 		} catch (SQLException e) {
@@ -89,10 +98,10 @@ public class SQLCommonDao implements CommonDao {
 			statement.setString(1, login);
             ResultSet set = statement.executeQuery();
             while (set.next()){
-                user.setLogin(set.getString(1));
-                user.setPassword(set.getString(2));
-                user.setRole(set.getString(3));
-                user.setBlocked(set.getBoolean(4));
+                user.setLogin(set.getString(COLUMN_NAME_LOGIN));
+                user.setPassword(set.getString(COLUMN_NAME_PASSWORD));
+                user.setRole(set.getString(COLUMN_NAME_ROLE));
+                user.setBlocked(set.getBoolean(COLUMN_NAME_BLOCKED));
             }
 		} catch (SQLException e) {
 			throw new DAOException("select user by login dao exception", e);
@@ -133,18 +142,18 @@ public class SQLCommonDao implements CommonDao {
                 catalog = new Catalog();
                 while (setOfBooks.next()){
                     Book book = new Book();
-                    book.setTitle(setOfBooks.getString(1));
-                    book.setAuthor(setOfBooks.getString(2));
-                    book.setPrice(setOfBooks.getInt(3));
+                    book.setTitle(setOfBooks.getString(COLUMN_NAME_TITLE));
+                    book.setAuthor(setOfBooks.getString(COLUMN_NAME_AUTHOR));
+                    book.setPrice(setOfBooks.getInt(COLUMN_NAME_PRICE));
                     catalog.addBook(book);
                 }
                 while (setOfProgrammerBooks.next()){
                     ProgrammerBook programmerBook = new ProgrammerBook();
-                    programmerBook.setTitle(setOfBooks.getString(1));
-                    programmerBook.setAuthor(setOfBooks.getString(2));
-                    programmerBook.setPrice(setOfBooks.getInt(3));
-                    programmerBook.setLanguage(setOfBooks.getString(4));
-                    programmerBook.setLevel(setOfBooks.getString(5));
+                    programmerBook.setTitle(setOfBooks.getString(COLUMN_NAME_TITLE));
+                    programmerBook.setAuthor(setOfBooks.getString(COLUMN_NAME_AUTHOR));
+                    programmerBook.setPrice(setOfBooks.getInt(COLUMN_NAME_PRICE));
+                    programmerBook.setLanguage(setOfBooks.getString(COLUMN_NAME_LANGUAGE));
+                    programmerBook.setLevel(setOfBooks.getString(COLUMN_NAME_LEVEL));
                     catalog.addProgrammerBook(programmerBook);
                 }
             }

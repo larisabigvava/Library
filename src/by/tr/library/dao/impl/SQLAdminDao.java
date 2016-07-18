@@ -12,7 +12,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class SQLAdminDao implements AdminDao {
-
 	private static final String UPDATE_USER_BLOCKED = "UPDATE `users` SET `blocked`=`0` WHERE `login`=?";
 	private static final String UPDATE_USER_UNBLOCKED = "UPDATE `users` SET `blocked`=`1` WHERE `login`=?";
 	private static final String DELETE_USER_BY_LOGIN = "DELETE FROM `users` WHERE `login`=?";
