@@ -25,8 +25,8 @@ public class FileCommonDao implements CommonDao {
     private final static Logger LOGGER = LogManager.getRootLogger();
     private final static FileCommonDao instance = new FileCommonDao();
 
-    private final static String BOOKS_FILE = "C:\\Users\\Larisa_Bigvava@epam.com\\Desktop\\Library\\books.txt";
-    private final static String USERS_FILE = "C:\\Users\\Larisa_Bigvava@epam.com\\Desktop\\Library\\users.txt";
+    private final static String BOOKS_FILE = "C:\\ \\_poit+epam\\test automation\\лаба\\Library\\src\\resources\\books.txt";
+    private final static String USERS_FILE = "C:\\ \\_poit+epam\\test automation\\лаба\\Library\\src\\resources\\users.txt";
     private List<String> users = null;
 
     public static FileCommonDao getInstance() {

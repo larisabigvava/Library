@@ -66,7 +66,7 @@ public class FileAdminDao implements AdminDao {
                 }
                 result = true;
             } catch (IOException e) {
-                LOGGER.error(e.getMessage());
+//                LOGGER.error(e.getMessage());
                 throw new DAOException("Block user by login dao exception", e);
             }
         }
