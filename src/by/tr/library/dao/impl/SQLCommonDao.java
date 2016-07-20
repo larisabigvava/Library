@@ -130,37 +130,35 @@ public class SQLCommonDao implements CommonDao {
 	}
 
 	@Override
-	public Catalog getCatalog() throws DAOException {
-		Catalog catalog = null;
+    public Catalog getCatalog() throws DAOException {
+        Catalog catalog = null;
         try (
                 Connection connection = ConnectionPool.getInstance().getConnection();
-                Statement statement = connection.createStatement();
-                ResultSet setOfBooks = statement.executeQuery(SELECT_BOOKS);
-                ResultSet setOfProgrammerBooks = statement.executeQuery(SELECT_PROGRAMMER_BOOKS)
+                Statement statement = connection.createStatement()
         ){
-            if (setOfBooks.next() || setOfProgrammerBooks.next()){
-                catalog = new Catalog();
-                while (setOfBooks.next()){
-                    Book book = new Book();
-                    book.setTitle(setOfBooks.getString(COLUMN_NAME_TITLE));
-                    book.setAuthor(setOfBooks.getString(COLUMN_NAME_AUTHOR));
-                    book.setPrice(setOfBooks.getInt(COLUMN_NAME_PRICE));
-                    catalog.addBook(book);
-                }
-                while (setOfProgrammerBooks.next()){
-                    ProgrammerBook programmerBook = new ProgrammerBook();
-                    programmerBook.setTitle(setOfBooks.getString(COLUMN_NAME_TITLE));
-                    programmerBook.setAuthor(setOfBooks.getString(COLUMN_NAME_AUTHOR));
-                    programmerBook.setPrice(setOfBooks.getInt(COLUMN_NAME_PRICE));
-                    programmerBook.setLanguage(setOfBooks.getString(COLUMN_NAME_LANGUAGE));
-                    programmerBook.setLevel(setOfBooks.getString(COLUMN_NAME_LEVEL));
-                    catalog.addProgrammerBook(programmerBook);
-                }
+            ResultSet setOfBooks = statement.executeQuery(SELECT_BOOKS);
+            catalog = new Catalog();
+            while (setOfBooks.next()){
+                Book book = new Book();
+                book.setTitle(setOfBooks.getString(COLUMN_NAME_TITLE));
+                book.setAuthor(setOfBooks.getString(COLUMN_NAME_AUTHOR));
+                book.setPrice(setOfBooks.getInt(COLUMN_NAME_PRICE));
+                catalog.addBook(book);
+            }
+            ResultSet setOfProgrammerBooks = statement.executeQuery(SELECT_PROGRAMMER_BOOKS);
+            while (setOfProgrammerBooks.next()){
+                ProgrammerBook programmerBook = new ProgrammerBook();
+                programmerBook.setTitle(setOfBooks.getString(COLUMN_NAME_TITLE));
+                programmerBook.setAuthor(setOfBooks.getString(COLUMN_NAME_AUTHOR));
+                programmerBook.setPrice(setOfBooks.getInt(COLUMN_NAME_PRICE));
+                programmerBook.setLanguage(setOfBooks.getString(COLUMN_NAME_LANGUAGE));
+                programmerBook.setLevel(setOfBooks.getString(COLUMN_NAME_LEVEL));
+                catalog.addProgrammerBook(programmerBook);
             }
 
         } catch (SQLException e) {
-            throw new DAOException("Get catalog dao excption", e);
+            throw new DAOException("Get catalog dao exception", e);
         }
         return catalog;
-	}
+    }
 }

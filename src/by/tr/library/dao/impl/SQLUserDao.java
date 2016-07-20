@@ -31,27 +31,26 @@ public class SQLUserDao implements UserDao{
 				Connection connection = ConnectionPool.getInstance().getConnection();
 				PreparedStatement booksStatement = connection.prepareStatement(SELECT_BOOK_BY_TITLE);
 				PreparedStatement programmerBooksStatement = connection.prepareStatement(SELECT_PROGRAMMER_BOOK_BY_TITLE)
-				){
+		){
+			booksStatement.setString(1, title);
+			programmerBooksStatement.setString(1, title);
 			ResultSet setOfBooks = booksStatement.executeQuery();
 			ResultSet setOfProgrammerBooks = programmerBooksStatement.executeQuery();
-			if (setOfBooks.next() || setOfProgrammerBooks.next()){
-				catalog = new Catalog();
-				while (setOfBooks.next()){
-					Book book = new Book();
-					book.setTitle(setOfBooks.getString(COLUMN_NAME_TITLE));
-					book.setAuthor(setOfBooks.getString(COLUMN_NAME_AUTHOR));
-					book.setPrice(setOfBooks.getInt(COLUMN_NAME_PRICE));
-					catalog.addBook(book);
-				}
-				while (setOfProgrammerBooks.next()){
-					ProgrammerBook programmerBook = new ProgrammerBook();
-					programmerBook.setTitle(setOfBooks.getString(COLUMN_NAME_TITLE));
-					programmerBook.setAuthor(setOfBooks.getString(COLUMN_NAME_AUTHOR));
-					programmerBook.setPrice(setOfBooks.getInt(COLUMN_NAME_PRICE));
-					programmerBook.setLanguage(setOfBooks.getString(COLUMN_NAME_LANGUAGE));
-					programmerBook.setLevel(setOfBooks.getString(COLUMN_NAME_LEVEL));
-					catalog.addProgrammerBook(programmerBook);
-				}
+			while (setOfBooks.next()){
+				Book book = new Book();
+				book.setTitle(setOfBooks.getString(COLUMN_NAME_TITLE));
+				book.setAuthor(setOfBooks.getString(COLUMN_NAME_AUTHOR));
+				book.setPrice(setOfBooks.getInt(COLUMN_NAME_PRICE));
+				catalog.addBook(book);
+			}
+			while (setOfProgrammerBooks.next()){
+				ProgrammerBook programmerBook = new ProgrammerBook();
+				programmerBook.setTitle(setOfBooks.getString(COLUMN_NAME_TITLE));
+				programmerBook.setAuthor(setOfBooks.getString(COLUMN_NAME_AUTHOR));
+				programmerBook.setPrice(setOfBooks.getInt(COLUMN_NAME_PRICE));
+				programmerBook.setLanguage(setOfBooks.getString(COLUMN_NAME_LANGUAGE));
+				programmerBook.setLevel(setOfBooks.getString(COLUMN_NAME_LEVEL));
+				catalog.addProgrammerBook(programmerBook);
 			}
 		} catch (SQLException e) {
 			throw new DAOException("Get books by title dao exception", e);
@@ -67,26 +66,25 @@ public class SQLUserDao implements UserDao{
 				PreparedStatement booksStatement = connection.prepareStatement(SELECT_BOOK_BY_AUTHOR);
 				PreparedStatement programmerBooksStatement = connection.prepareStatement(SELECT_PROGRAMMER_BOOK_BY_AUTHOR)
 		){
+			booksStatement.setString(1, author);
+			programmerBooksStatement.setString(1, author);
 			ResultSet setOfBooks = booksStatement.executeQuery();
 			ResultSet setOfProgrammerBooks = programmerBooksStatement.executeQuery();
-			if (setOfBooks.next() || setOfProgrammerBooks.next()){
-				catalog = new Catalog();
-				while (setOfBooks.next()){
-					Book book = new Book();
-					book.setTitle(setOfBooks.getString(COLUMN_NAME_TITLE));
-					book.setAuthor(setOfBooks.getString(COLUMN_NAME_AUTHOR));
-					book.setPrice(setOfBooks.getInt(COLUMN_NAME_PRICE));
-					catalog.addBook(book);
-				}
-				while (setOfProgrammerBooks.next()){
-					ProgrammerBook programmerBook = new ProgrammerBook();
-					programmerBook.setTitle(setOfBooks.getString(COLUMN_NAME_TITLE));
-					programmerBook.setAuthor(setOfBooks.getString(COLUMN_NAME_AUTHOR));
-					programmerBook.setPrice(setOfBooks.getInt(COLUMN_NAME_PRICE));
-					programmerBook.setLanguage(setOfBooks.getString(COLUMN_NAME_LANGUAGE));
-					programmerBook.setLevel(setOfBooks.getString(COLUMN_NAME_LEVEL));
-					catalog.addProgrammerBook(programmerBook);
-				}
+			while (setOfBooks.next()){
+				Book book = new Book();
+				book.setTitle(setOfBooks.getString(COLUMN_NAME_TITLE));
+				book.setAuthor(setOfBooks.getString(COLUMN_NAME_AUTHOR));
+				book.setPrice(setOfBooks.getInt(COLUMN_NAME_PRICE));
+				catalog.addBook(book);
+			}
+			while (setOfProgrammerBooks.next()){
+				ProgrammerBook programmerBook = new ProgrammerBook();
+				programmerBook.setTitle(setOfBooks.getString(COLUMN_NAME_TITLE));
+				programmerBook.setAuthor(setOfBooks.getString(COLUMN_NAME_AUTHOR));
+				programmerBook.setPrice(setOfBooks.getInt(COLUMN_NAME_PRICE));
+				programmerBook.setLanguage(setOfBooks.getString(COLUMN_NAME_LANGUAGE));
+				programmerBook.setLevel(setOfBooks.getString(COLUMN_NAME_LEVEL));
+				catalog.addProgrammerBook(programmerBook);
 			}
 		} catch (SQLException e) {
 			throw new DAOException("Get books by title dao exception", e);
