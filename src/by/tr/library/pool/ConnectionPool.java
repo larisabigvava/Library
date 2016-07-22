@@ -95,24 +95,20 @@ public class ConnectionPool {
 
     @PreDestroy
     private void releasePool() {
-        closed.set(true);
+    closed.set(true);
+    for (ProxyConnection connection : availableConnections) {
         try {
-            TimeUnit.SECONDS.sleep(CLOSE_TIMEOUT_SEC);
-            for (ProxyConnection connection : availableConnections) {
-                try {
-                    connection.closeConnection();
-                } catch (SQLException ex) {
-                }
-            }
-            if (!usedConnections.isEmpty()) {
-                for (ProxyConnection connection : usedConnections) {
-                    try {
-                        connection.closeConnection();
-                    } catch (SQLException ex) {
-                    }
-                }
-            }
-        } catch (InterruptedException ex) {
+            connection.closeConnection();
+        } catch (SQLException ex) {
         }
+    }
+    if (!usedConnections.isEmpty()) {
+        for (ProxyConnection connection : usedConnections) {
+            try {
+                connection.closeConnection();
+            } catch (SQLException ex) {
+            }
+        }
+    }
     }
 }
